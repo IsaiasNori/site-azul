@@ -1,0 +1,39 @@
+{
+    "type":
+    {
+        "base":
+        {
+            "north":
+            [
+                "vcp",
+                "rao",
+                "bel"
+            ],
+            "northeast": 
+            [],
+            "midwest": 
+            [],
+            "southeast": 
+            [],
+            "south": 
+            []
+        },
+
+        "tma":
+        [
+            "sp", "rj", "bh"
+        ],
+        
+        "fir":[
+            1, 2, 3
+        ]
+    
+    },
+    
+    "reason":
+    { 
+        "wxx" : { "className": "wxx-color" },
+        "atc" : { "className": "atc-color"},
+        "other" : {  "className": "other-color" }
+    }
+}

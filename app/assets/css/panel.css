@@ -1,0 +1,151 @@
+/* GENERAL */
+* {
+    box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	font-family: Verdana, Geneva, Tahoma, sans-serif;
+	color: rgb(235, 245, 255);
+	display: grid;
+	height: 100vh;
+	background-color: #000; 
+	grid-template-rows: 10% 1fr auto;
+	grid-template-columns: 1fr;
+	grid-template-areas: 'header' 'blocks' 'infoadd';
+}
+
+/* HEADER */
+header {
+	grid-area: header;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	overflow: hidden;
+	margin: 0.2vw 0.5vw;
+	padding: 0 10px;
+}
+
+header h2 { font-size: 2vw; }
+
+#title-header {
+	font-size: 1.8vw;
+	font-weight: bolder;
+}
+
+#middle-header {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+	align-items: center;
+}
+
+#update-div { font-size: 1.2vw; }
+
+#legend-header {
+	display: flex;
+}
+
+.span-reason {
+	min-width: 6.5vw;
+	margin: 0 0.5vw;
+	padding: 0.4vw;
+	text-align: center;
+	font-size: 1.5vw;
+	font-weight: bolder;
+}
+
+
+/* CONTENT */
+#content {
+	grid-area: blocks;
+	display: grid;
+	grid-template-rows: repeat(3, 33.3333%);
+	grid-template-columns: repeat(2, 50%);
+	margin: 0 0.3vw;
+}
+
+.div-block{
+	display: grid;
+	overflow: hidden;
+	margin: 0.2vw;
+	font-weight: bolder;
+}
+
+.div-region-title {
+	grid-row-start: 1;
+	grid-row-end: 3;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	overflow: hidden;
+	word-break: break-all;
+	max-width: 1.5vw;
+	padding-left: 0.2vw;
+	font-size: 1.4vw;
+	color: #5F87FF;
+}
+
+.div-block-grid1 {  /* Se tiver menos de 4 bases */
+	grid-template-rows: 1fr;
+	grid-template-columns: 3% repeat(auto-fit, minmax(15%, 4fr));
+}
+.div-block-grid1 .base-name{
+	font-size: 4vw;
+}
+.div-block-grid1 .xfuel-content{
+	font-size: 5vw;
+}
+.div-block-grid1 .dot { height: 2.5vw; width: 2.5vw; background-size: cover; }
+
+.div-block-grid2 {  /* Se tiver mais de 4 bases */
+	grid-template-rows: repeat(2, 1fr);
+	grid-template-columns: 3% repeat(auto-fit, minmax(15%, 6fr));
+}
+.div-block-grid2 .base-name{
+	font-size: 2.5vw;
+}
+.div-block-grid2 .xfuel-content{
+	font-size: 3vw;
+}
+.div-block-grid2 .dot { height: 2vw; width: 2vw; background-size: cover; }
+
+
+.brick {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+	align-items: center;
+	overflow: hidden;
+	word-break: break-all;
+	margin: 0.2vw;
+}
+
+.xfuel-content {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+}
+.xfuel-content:hover{
+	border-radius: 5px; border: 1.2px solid rgba(255, 255, 255, 0.5);
+}
+
+
+/* INFOADD - IMPLEMENTAR*/
+#info-content {
+	grid-area: infoadd;
+}
+
+
+/* Customized */
+.wxx-border { border-radius: 5px; border: 1.2px solid rgba(60, 20, 255, 0.8); }
+.atc-border { border-radius: 5px; border: 1.2px solid rgba(255, 210, 75, 0.8); }
+.other-border {	border-radius: 5px; border: 1.2px solid rgba(255, 255, 255, 0.5); }
+
+.green {  background-image: url("/assets/images/gifs/green-dot.gif"); }
+.yellow { background-image: url("/assets/images/gifs/yellow-dot.gif"); }
+.red { background-image: url("/assets/images/gifs/red-dot.gif"); }
+.white { background-image: url("/assets/images/dots/white-dot.png"); }
