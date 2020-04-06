@@ -2,6 +2,7 @@
 
 <head>
 	<meta charset="UTF-8">
+	<meta http-equiv="refresh" content="120"/>
 	<link rel="stylesheet" href="/assets/css/panel.css">
 	<script src="/assets/date/date-format.js"></script>
 	<script src="/assets/jquery/jquery-3.4.1.min.js"></script>

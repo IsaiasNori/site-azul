@@ -1,72 +1,65 @@
 $(document).ready(()=>{
     let content = $('#content');
     content.remove('.brick');
-    let blocks = $('.div-block');
-
+    
     const dtStart = getCurrentDate();
     const uri = "/api-xfuel/action.php?"
-                + "filter=all"
-                + "&date_start=" + dtStart;
+    + "filter=all"
+    + "&date_start=" + dtStart;
     $.ajax({
         type: "GET",
         url: uri
     }).done(function (result) {
-        // let registers = JSON.parse(result);
-        console.log( typeof(result) );
-        // console.log("reg= " + registers );
-
-        // for (const region in registers) {
-        //     for (const base in region) {
-        //         let brick = createBrick(base);
-        //     }
-        // }
+        loadData(result);
     }).fail(function (d, status){
         alert (status);
     });
-
-
-
-
+    
+    let blocks = $('.div-block');
     blocks.toggle().toggle(1000);
 });
 
-function createBrick(item) {
-    console.log('object :', item);
+
+function loadData(data){
+    $(data).each((i, item)=>{
+        const region = item.REGION.toLowerCase();
+        
+        $(`#${region}`).append(createBrick(item.LOCATION, item.XFUEL_VALUE, item.REASON));
+        console.log(item);
+    });
+    
+    $('.div-block').each((i, item)=>{
+        if ($(item).children > 5) $(item).addClass('div-block-grid2');
+        else $(item).addClass('div-block-grid1');
+    });
 }
 
-// $('.div-block').each((i, div) => {
-// 	if (div.children.length <= 5){
-// 		$(div).addClass('div-block-grid1');
-// 	}
-// 	else {
-// 		$(div).addClass('div-block-grid2');
-// 	}
-// });
+function createBrick(name, qtyFuel, reason){
+    let color = fuelColor(qtyFuel);
 
-// $('#content').fadeIn(3000);
+    let divFuelColor = document.createElement("div");
+    $(divFuelColor).addClass(`dot ${color}`);
 
-// // apagar essa linha depois
-// $('#info-content').hide();
+    let divXfuel = document.createElement("div");
+    $(divXfuel).addClass('xfuel-content');
+    $(divXfuel).append(divFuelColor);
+    $(divXfuel).append(qtyFuel);
 
+    let divName = document.createElement("div");
+    $(divName).addClass('base-name');
+    $(divName).text(name);
 
-// function loadData(){
-// 	const dtStart = getCurrentDate();
-//     const uri = "/xfuel/action.php?"
-//                 + "filter=all"
-//                 + "&date_start=" + dtStart;
-//     $.ajax({
-//         type: "GET",
-//         url: uri
-//     }).done(function (result) {
-//         $('#content').empty();
-//         $('#content').append(createGrid(JSON.parse(result)));
-//     }).fail(function (d, status){
-//         alert (status);
-//     });
-// }
+    let brick = document.createElement("div");
+    $(brick).addClass(`brick ${reason.toLowerCase()}-border`);
+    $(brick).append(divName);
+    $(brick).append(divXfuel);
 
-// function createGrid(data){
-// 	$.each(data, (i, item)=>{
-		
-// 	});
-// }
+    return brick;
+}
+
+function fuelColor (time) {
+    if(time >= 45) return "red"; 
+    else if(time >= 30)  return "yellow"; 
+    else if(time >= 15) return "green"; 
+    return "white";
+}

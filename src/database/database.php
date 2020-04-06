@@ -14,7 +14,7 @@ class DataBase {
     }
 
     static public function getXFuelFromQuery($sql){
-        $result = DataBase::connection()->query($sql);
+        $result = self::connection()->query($sql);
         $data = array();
 
         while ($res = $result->fetchArray(SQLITE3_ASSOC)){
@@ -23,7 +23,5 @@ class DataBase {
 
         return $data;
     }
-
-
 }
 ?>
