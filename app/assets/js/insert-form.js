@@ -1,166 +1,160 @@
-
-// const typeField = $('#type-field');
-// const localField = $("#local-field");
-// const reasonField = $("#reason-field");
-
-
-
-// const utils = function () {
-
-// }
-$(document).ready(()=>{
-    formEmpty();
-    
-    $.get('/assets/json/utils.json', (json) => { 
-        const types         = json.type;
-        const reasons       = json.reason;
-        const bases         = types.base;
-        const tmas          = types.tma;
-        const firs          = types.fir;
-
-        const typeField     = $('#type-field');
-        const localField    = $("#local-field");
-        const reasonField   = $("#reason-field");
-
-        $.each(types, (i)=>{
-            typeField.append(
-                `<option value="${i.toUpperCase()}">${i.toUpperCase()}</option>`
-            );
-        });
-
-        $.each(reasons, (i)=>{
-            reasonField.append(
-                `<option value="${i.toUpperCase()}">${i.toUpperCase()}</option>`
-            );
-        });
-
-        typeField.change((e)=>{
-            localField.empty();
-            switch ($(e.target).val()){
-                case "BASE":
-                    $.each(bases, (i, item)=>{
-                        $.each(item, (j, value)=>{
-                            localField.append(
-                                `<option value="${value.toUpperCase()}">${value.toUpperCase()}</option>`
-                            );
-                        });
-                    });
-                    break;
-                    
-                case "TMA": 
-                    $.each(tmas, (i, value)=>{
-                        localField.append(
-                            `<option value="${value.toUpperCase()}">${value.toUpperCase()}</option>`
-                        );
-                    });
-                    break;
-                    
-                case "FIR":
-                    $.each(firs, (i, value)=>{
-                        localField.append(
-                            `<option value="${value.toUpperCase()}">${value.toUpperCase()}</option>`
-                        );
-                    });
-                    break;
-
-                default: return;
-            }
-        });
-
-        $('#btn-close').click((e)=>{
-            e.preventDefault();
-            hidde();
-        });
-        $('#btn-clear').click((e)=>{
-            e.preventDefault();
-            formEmpty();
-        });
-        $('#btn-save').click((e)=>{
-            e.preventDefault();
-            insertNew();
-        });
+function initialize(){
+    emptyForm();
+    $.get('/assets/json/utils.json', (data, status)=>{
+        if (status == 'success'){
+            $.each(data.type, (i)=>{
+                $('#type').append(`<option value="${i}">${i.toUpperCase()}</option>`);
+            });
+            loadForm(data);
+        }else{
+            alert('Erro no servidor\n Contate o administrador!')
+        }
     });
-
-    $('[field]').change(()=>{
-        $('.row').removeClass('alert');
-        $('#messages').empty();
-    });
-});
-
-    // To hidden the 'hidde' div (form)
-function hidde () {
-    if (window.event.srcElement == $('.reveal')[0] || window.event.srcElement == $('#btn-close')[0]){
-        $('.reveal').addClass('hidden');
-        $('.reveal').removeClass('reveal');
-        $('#content-form').empty();
-    }
 }
 
-function formEmpty(){
-    $('[field]').empty();
-    $('#xfuel-field').val("");
-    $('.row').removeClass('alert');
-    $('#messages').empty();
-    $('#type-field ,#local-field ,#reason-field').append('<option>---</option>')
+function change(typeValue){
+    emptyForm();
+    $.get('/assets/json/utils.json', (data, status)=>{
+        if (status == 'success'){
+            $.each(data.type, (i)=>{
+                $('#type').append(`<option value="${i}">${i.toUpperCase()}</option>`);
+            });
+            $('#type').val(typeValue);
+            loadForm(data);
+        }else{
+            alert('Erro no servidor\n Contate o administrador!')
+        }
+    });
+}
 
-    console.log('clear');
-    
+function loadForm(json){
+    let type = $('#type').val();
+
+    if (type == 'base') {
+        $.each(json.type.base, (i, region)=>{
+            $.each(region, (j, base)=>{
+                $('#local').append(`<option value="${base}">${base.toUpperCase()}</option>`);
+            });
+        });
+    }else{
+        $.each(json.type[type], (j, item)=>{
+            $('#local').append(`<option value="${item}">${item.toString().toUpperCase()}</option>`);
+        });
+    }
+
+    $.each(json.reason, (i)=>{
+        $('#reason').append(`<option value="${i}">${i.toUpperCase()}</option>`);
+    });
+
     for (let i = 0; i < 24; i++) {
         const h = (i.toString().length < 2) ? `0${i.toString()}:00`  : `${i.toString()}:00`;
-        $('#start-time, #end-time').append(`<option>${h}</option>`);
+        $('#start-tm, #end-tm').append(`<option>${h}</option>`);
     };
+}
+
+function emptyForm(){
+    $('[field]').empty();
+    $('#messages').empty();
+    $('.row').removeClass('alert');
+    $('#x-fuel').val(null);
+    $('input[type="date"]').val(null);
+}
+
+function inputData() {
+    $.ajax({
+        type: "POST",
+        url: "/api-xfuel/action.php",
+        data: $('form').serialize(),
+        success: (e)=>{
+            hidde();
+            loadList('all');
+            alert("Registro inserido!");
+        },
+        error: (e)=>{
+            console.log('Erro! \nMensagem de erro:', e);
+        }
+    });
 }
 
 function validateForm () {
     const msg = $('#messages');
-    var obj;
-    var row;
+    let row;
+    let bol = true;
 
-    if ($('#type-field').val() == '---' || !$('#type-field').val()) { 
-        msg.text('O tipo de Informação é obrigatório!');
-        row = $('#type-field').parent();
-        row.addClass('alert');
-        return false;
-    }
+    $('[field]').each((i, item)=>{
+        if ($(item).val() == "") {
+            msg.text('Campo com preenchimento obrigatório!');
+            row = $(item).parent();
+            row.addClass('alert');
+            $(item).focus();
+            bol = false
+            return false;
+        }
+    });
 
-    if ($('#local-field').val() == '---' || !$('#local-field').val()) {
-        msg.text('A localidade é obrigatória!');
-        row = $('#local-field').parent();
-        row.addClass('alert');
-        return false;
-    }
+    
+    // if ($('#type-field').val() == '---' || !$('#type-field').val()) { 
+    //     msg.text('O tipo de Informação é obrigatório!');
+    //     row = $('#type-field').parent();
+    //     row.addClass('alert');
+    //     return false;
+    // }
 
-    if ($('#xfuel-field').val() == "" && ($('#type-field').val() != 'BASE' || $('#type-field').val() != 'TMA')) {
-        msg.text('Para BASE e TMA o xfuel é obrigatório!');
-        row = $('#xfuel-field').parent();
-        row.addClass('alert');
-        return false;
-    }
+    // if ($('#local-field').val() == '---' || !$('#local-field').val()) {
+    //     msg.text('A localidade é obrigatória!');
+    //     row = $('#local-field').parent();
+    //     row.addClass('alert');
+    //     return false;
+    // }
 
-
-
-
+    // if ($('#xfuel-field').val() == "" && ($('#type-field').val() != 'BASE' || $('#type-field').val() != 'TMA')) {
+    //     msg.text('Para BASE e TMA o xfuel é obrigatório!');
+    //     row = $('#xfuel-field').parent();
+    //     row.addClass('alert');
+    //     return false;
+    // }
     // obj.type = $('#type-field').val();
 
+    return bol;
 }
 
-function insertNew() {
-    // alert("merdaaaaa");
-    console.log(validateForm ());
+// To hidden the 'hidde' div (form)
+function hidde () {
+    $('.reveal').addClass('hidden');
+    $('.reveal').removeClass('reveal');
+    $('#content-form').empty();
+}    
 
+// behavior
+$('.reveal').click((e)=>{ if (e.target.id === "enabling"){ hidde(); }});
 
-    // $.ajax({
-    //     type: "POST",
-    //     url: "/api-xfuel/action.php",
-    //     data: {
-    //         name: "isaias",
-    //         idade: 30,
-    //         sexo: "M"
-    //     }
-    // }).done(function (e) {
+$('#btn-save').click(function (e) { 
+    e.preventDefault();
+    if (validateForm()){ 
+        inputData();
+    }
+});
 
-    //     alert(e);
-    
-    // });
-}
+$('#btn-clear').click(function (e) { 
+    e.preventDefault();
+    initialize();
+    $('#rmk').empty();
+});
 
+$('#btn-close').click(function (e) { 
+    e.preventDefault();
+    hidde();
+});
+
+$('#type').change((e)=>{
+    change($(e.target).val());
+});
+
+$('[field]').click(()=>{
+    $('#messages').empty();
+    $('.row').removeClass('alert');
+});
+
+$('form').ready(()=>{
+    initialize();
+});

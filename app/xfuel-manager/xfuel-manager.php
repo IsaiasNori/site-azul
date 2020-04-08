@@ -53,7 +53,7 @@
             </div>
         </div>
     </main>
-    <div class="hidden" center onclick="hidde();">
+    <div id="enabling" class="hidden" center>
         <div id="content-form"></div>
     </div>
     <script src="/assets/js/xfuel-manager.js"></script>

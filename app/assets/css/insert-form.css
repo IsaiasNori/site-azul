@@ -1,80 +1,62 @@
 form {
-    overflow: hidden;
+    overflow-y: scroll;
+    position: relative;
     height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    padding-bottom: 20px;
-    background-color: papayawhip;
+    padding: 1vw;
+    background-color: rgb(255, 230, 210);
 }
 
 #form-head {
     display: grid;
-    min-height: 70px;
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: repeat(2, 50%);
     grid-template-rows: repeat(2, 50%);
-    width: 100%;
     padding: 5px;
-    background-color: #161657;
+    background-color: #0c0c55;
     color: snow;
 }
 
-#menu-buttons {
-    /* grid-row: 1; */
-    display: flex;
-    justify-content: flex-end;
-}
+h1 { display: block; font-size: 1.8vw; padding: 5px;}
 
-#form-head #messages {
+#menu-buttons { display: flex; justify-content: flex-end; }
+
+#messages {
     grid-column: 1 / 3;
-    grid-row: 2;
-    width: 100%;
-    font-size: small;
+    padding: 10px;
     color: rgb(255, 0, 0);
 }
 
-
 button {
-    font-weight: bolder;
-    padding: 2px;
-    text-align: center;
-    height: 1.5vw;
+    height: 1.6vw;
+    width: 4.6vw;
+    margin: 0.5vw;
+    font-weight: bold;
+    font-size: 1vw;
+    border-radius: 2.5px;
+    border-style: none;
+    background-color: rgb(205, 205, 205);
+    cursor: pointer;
 }
 
 .row {
-    width: 100%;
-    display: flex;
-    justify-content: left;
+    display: grid;
+    grid-template-columns: 60% 40%;
+    margin: 1vw;
 }
+.row label { font-size: 1.5vw; }
 
-.alert {
-    background-color: rgba(190, 50, 50, 0.3);
-    /* border: 1.5px solid red; */
-}
+.alert { background-color: rgba(100, 100, 200, 0.2); }
 
-label {
-    font-size: larger;
-    font-weight: 800;
-    width: 350px;
-    margin-right: 15px;
-    text-align: right;
-}
+[field] { width: 75%; border-radius: 3px; } 
 
-[size-default]{
-    width: 8vw;
-    height: 2vw;
+fieldset { margin: 15px 30px; border-color: #0c0c55; }
+fieldset label { grid-column: 1 / 3; }
+
+input[type="date"]::-webkit-inner-spin-button { display: none; -webkit-appearance: none; }
+
+#rmk {
+    width: 95%;
+    height: 8vw;
+    margin: 10px;
     font-size: large;
-    font-weight: 600;
-}
-
-input[type="date"]::-webkit-inner-spin-button {
-    display: none;
-    -webkit-appearance: none;
-}
-
-#rmk-field {
-    width: 40%;
-    height: 6vw;
-    font-size: large;
+    resize: none;
 }

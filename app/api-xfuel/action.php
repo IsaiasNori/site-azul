@@ -44,8 +44,8 @@ function getXfuel(){
 }
 
 function insertXfuel(){
-    echo 'ahaaaaa';
     // implementar essa caralha
+    var_dump($_POST);
 }
 
 ?>
