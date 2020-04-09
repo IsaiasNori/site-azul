@@ -1,33 +1,58 @@
 {
     "type":
     {
-        "base":
+        "xfuel":
         {
             "north":
-            [
-                "vcp",
-                "rao",
-                "bel"
-            ],
-            "northeast": 
-            [],
+            {
+                "label": "NORTE",
+                "bases":
+                [
+                    "bel",
+                    "mao",
+                    "stm",
+                    "mcp"
+                ]
+            },
+            "northeast":
+            {
+                "label": "NORDESTE",
+                "bases":[]
+            },
             "midwest": 
-            [],
-            "southeast": 
-            [],
+            {
+                "label": "CENTRO",
+                "bases":[]
+            },
+            "southeast":
+            {
+                "label": "SUDESTE",
+                "bases":
+                [
+                    "vcp",
+                    "rao",
+                    "cgh",
+                    "gru",
+                    "gig"
+                ]
+            },
             "south": 
-            []
+            {
+                "label": "SUL",
+                "bases":[]
+            },
+            "tma":
+            {
+                "label": "TMA",
+                "bases":
+                [
+                    "sp", 
+                    "rj", 
+                    "bh"
+                ]
+            }
         },
-
-        "tma":
-        [
-            "sp", "rj", "bh"
-        ],
-        
-        "fir":[
-            1, 2, 3
-        ]
-    
+        "alert":"ALERTA"
     },
     
     "reason":

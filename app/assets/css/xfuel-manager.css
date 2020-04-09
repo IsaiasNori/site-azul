@@ -49,24 +49,31 @@ header { grid-area: header; }
 
 /* NAVIGATION */
 nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     grid-area: nav;
-    padding: 0 12.5%;
+    padding: 0 15vw;
     background-color: #161657;
     color: snow;
 }
-
-nav a {
-    color: snow;
-    text-decoration: none;
-    margin: 0 5px;
-}
-
 #div-msg {
-    width: 80%;
-    font-size: 1.3vw;
+    /* width: 80%; */
+    font-size: 1.4vw;
     word-break: break-all;
     overflow: hidden;
+    color: rgb(255, 215, 215);
 }
+#nav-menu a {
+    font-size: 1.6vw;
+    color: inherit;
+    text-decoration: none;
+    margin-left: 2vw;
+}
+
+
+
+
 
 
 /* MAIN */
@@ -201,8 +208,8 @@ main {
 #content-form {
     height: 90%;
     width: 40%;
-    display: grid;
-    grid-template-rows: 15% 85%;
+    /* display: grid;
+    grid-template-rows: 15% 85%; */
     border: 1.5px solid black;
     border-radius: 5px;
 }

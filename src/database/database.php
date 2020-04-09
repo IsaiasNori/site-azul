@@ -8,20 +8,29 @@ class DataBase {
         $cn = new SQLite3($pathdb);
 
         if (!isset($cn)) { 
-            die ('Error: ' . $cn->lastErrorMsg());
+            die ('Error in DataBase: ' . $cn->lastErrorMsg());
         }
+
         return $cn;
     }
 
     static public function getXFuelFromQuery($sql){
-        $result = self::connection()->query($sql);
-        $data = array();
+        try {
+            $result = self::connection()->query($sql);
+            
+            if (error_get_last() != null ) { throw new Exception(error_get_last()); }
 
-        while ($res = $result->fetchArray(SQLITE3_ASSOC)){
-            array_push($data, $res);
+            $data = array();
+
+            while ($res = $result->fetchArray(SQLITE3_ASSOC)){
+                array_push($data, $res);
+            }
+    
+            return $data;
         }
-
-        return $data;
+        catch(Throwable $e) {
+            throw new ErrorException($e);
+        }
     }
 }
 ?>

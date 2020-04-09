@@ -1,8 +1,8 @@
 form {
-    overflow-y: scroll;
+    display: grid;
+    grid-template-rows: 15% 85%;
     position: relative;
     height: 100%;
-    padding: 1vw;
     background-color: rgb(255, 230, 210);
 }
 
@@ -13,6 +13,11 @@ form {
     padding: 5px;
     background-color: #0c0c55;
     color: snow;
+}
+
+#form-body{
+    overflow-y: scroll;
+    padding: 0 1.5vw;
 }
 
 h1 { display: block; font-size: 1.8vw; padding: 5px;}
@@ -48,8 +53,9 @@ button {
 
 [field] { width: 75%; border-radius: 3px; } 
 
-fieldset { margin: 15px 30px; border-color: #0c0c55; }
+fieldset { margin: 10px 35px; }
 fieldset label { grid-column: 1 / 3; }
+fieldset .row { margin: 0 0 1vw 1vw; }
 
 input[type="date"]::-webkit-inner-spin-button { display: none; -webkit-appearance: none; }
 
@@ -60,3 +66,5 @@ input[type="date"]::-webkit-inner-spin-button { display: none; -webkit-appearanc
     font-size: large;
     resize: none;
 }
+
+.disable { display: none; }
