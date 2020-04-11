@@ -2,7 +2,7 @@
 
 
 
-<form onsubmit="inputData();">
+<form>
     <div id="form-head">
         <h1>Combustível Extra</h1>
         <div id="menu-buttons" >

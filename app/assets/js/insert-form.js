@@ -1,41 +1,43 @@
 function initialize(eraser = true){
     emptyForm();
     $.get('/assets/json/utils.json', (json, status)=>{
-        if (status == 'success'){
+        if (status === 'success'){
             $.each(json.type, (key)=>{
                 let opt = key==='alert' ? "ALERTA" : key.toUpperCase();
                 $('#type').append(`<option value="${key}">${opt}</option>`);
             });
             if(!eraser){$('#type option[value="alert"]').prop('selected',true);}
         }else{
-            alert('Erro ao conectar o servidor\n Tente novamente mais tarde!');
+            msg('Servidor indisponível!');
         }
     });
 }
 
 function loadRegion() {
     $.get('/assets/json/utils.json', (json, status)=>{
-        if (status == 'success'){
-            $('#region').parent().removeClass('disable');
+        if (status === 'success'){
+            $('#region, #local, #reason').parent().removeClass('disable');
             $('#x-fuel, #region, #local, #reason').prop('required', true);
             $.each(json.type.xfuel, (key, item)=>{
                 $('#region').append(`<option value="${key}">${item.label}</option>`);
             });
+            $.each(json.reason, (key, item)=>{
+                $('#reason').append(`<option value="${key}">${key.toUpperCase()}</option>`);
+            });
         }else{
-            alert('Erro ao conectar o servidor\n Tente novamente mais tarde!');
+            msg('Servidor indisponível!');
         }
     });
 }
 
 function loadLocal(regionVal) {
     $.get('/assets/json/utils.json', (json, status)=>{
-        if (status == 'success'){
-            $('#local').parent().removeClass('disable');
+        if (status === 'success'){
             $.each(json.type.xfuel[regionVal].bases, (i, local)=>{
                 $('#local').append(`<option value="${local}">${local.toUpperCase()}</option>`);
             });
         }else{
-            alert('Erro ao conectar o servidor\n Tente novamente mais tarde!');
+            msg('Servidor indisponível!');
         }
     });
 }
@@ -49,17 +51,16 @@ function emptyForm(){
     $('.row').removeClass('alert');
     $('#type, #region, #local').empty().append('<option></option>');
     $('#region, #local, #reason').parent().addClass('disable');
-    $('#x-fuel, #region, #local, #reason').removeProp('required');
+    $('#x-fuel, #region, #local, #reason').prop('required', false);
     
-    console.log($('#x-fuel, #region, #local, #reason'));
     for (let i = 0; i < 24; i++) {
         const h = (i.toString().length < 2) ? `0${i.toString()}:00`  : `${i.toString()}:00`;
         $('#start-tm, #end-tm').append(`<option>${h}</option>`);
     };
 }
 
-function inputData() {
-    // console.log('url :', $('form').serialize());
+function inputData(e) {
+    e.preventDefault();
     if (validateForm()){
         $.ajax({
             type: "POST",
@@ -67,54 +68,30 @@ function inputData() {
             data: $('form').serialize(),
             success: (response)=>{
                 console.log('response :', response);
-                // hidde();
                 // loadList('all');
                 // $('#div-msg').text("Registro inserido com sucesso!")
-                // alert("Registro inserido!");
+                // hidde();
             },
             error: (e)=>{
-                // console.log('erro:', e);
-                alert('Erro ao tentar salvar os dados\nContate o administrador!');
+                console.log('e :', e.responseText);
+                msg('Servidor indisponível!');
             }
         });
     }
 }
 
 function validateForm () {
-    const msg = $('#messages');
-    let bol = true;
-
-    let dtstart = new Date($('#start-dt').val());
-    let hourStart = parseInt($('#start-tm').val().substr(0, 2));
-    let minStart = parseInt($('#start-tm').val().substr(3, 2));
+    // let bol = true;
 
     let currentTime = new Date();
+    let start = new Date(`${$('#start-dt').val()} ${$('#start-tm').val()}`);
+    let end = new Date(`${$('#end-dt').val()} ${$('#end-tm').val()}`);
 
-    // if (currentTime.getHours() > hourStart) { msg.text("Data final deve ser maior que data inicial!") bol}
-    
-    if (dtstart.getTime() > dtend.getTime()){ bol = false;
-    }
-    else if (dtstart.getTime() == dtend.getTime())
-    {
-        if (hourStart > parseInt($('#end-tm').val().substr(0, 2))){ bol = false;
-        }
-        else if (hourStart == parseInt($('#end-tm').val().substr(0, 2))) 
-        {
-            if (minStart > parseInt($('#end-tm').val().substr(3, 2))){ bol = false; }
-        }
-    }
 
-    if (!bol){ msg.text("Data final deve ser maior que data inicial!"); }
+    if(start < currentTime) {$('#start-dt').focus(); msg(`Data Inicial deve ser maior que a Atual`); return false;}
+    if(end <= start) {$('#start-dt').focus(); msg('Data final deve ser maior que Data Inicial'); return false;}
 
-    // function activeAlert(elm){
-    //     let row;
-    //     row = $(elm).parent();
-    //     row.addClass('alert');
-    //     $(elm).focus();
-    //     bol = false;
-    // }
-
-    return bol;
+    return true;
 }
 
 // To hidden the 'hidde' div (form)
@@ -122,7 +99,9 @@ function hidde () {
     $('.reveal').addClass('hidden');
     $('.reveal').removeClass('reveal');
     $('#content-form').empty();
-}    
+}
+
+function msg(text){$('#messages').text(text);}
 
 // behavior
 $('.reveal').click((e)=>{if(e.target.id==="enabling"){ hidde();}});
@@ -139,4 +118,4 @@ $('#region').change((e)=>{if(e.target.value===""){initialize();}else{loadLocal(e
 
 $('#local').change((e)=>{if(e.target.value===""){initialize();}});
 
-$('form').ready(()=>{initialize();});
+$('form').ready(()=>{initialize();}).on('submit', inputData);
