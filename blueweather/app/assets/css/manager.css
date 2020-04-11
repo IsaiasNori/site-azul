@@ -179,9 +179,9 @@ main {
 
 .icons:hover { border: 1px solid rgb(0, 0, 0); }
 
-.new-icon { background-image: url("/assets/images/icons/new-icon.png");}
-.edit-icon { background-image: url("/assets/images/icons/edit-icon.png");}
-.delete-icon { background-image: url("/assets/images/icons/delete-icon.png");}
+.new-icon { background-image: url("../images/icons/new-icon.png");}
+.edit-icon { background-image: url("../images/icons/edit-icon.png");}
+.delete-icon { background-image: url("../images/icons/delete-icon.png");}
 
 
 /* CUSTOMIZED ROWS */

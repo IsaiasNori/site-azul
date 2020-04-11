@@ -1,6 +1,6 @@
 function initialize(eraser = true){
     emptyForm();
-    $.get('/assets/json/utils.json', (json, status)=>{
+    $.get('../assets/json/utils.json', (json, status)=>{
         if (status === 'success'){
             $.each(json.type, (key)=>{
                 let opt = key==='alert' ? "ALERTA" : key.toUpperCase();
@@ -14,7 +14,7 @@ function initialize(eraser = true){
 }
 
 function loadRegion() {
-    $.get('/assets/json/utils.json', (json, status)=>{
+    $.get('../assets/json/utils.json', (json, status)=>{
         if (status === 'success'){
             $('#region, #local, #reason').parent().removeClass('disable');
             $('#x-fuel, #region, #local, #reason').prop('required', true);
@@ -31,7 +31,7 @@ function loadRegion() {
 }
 
 function loadLocal(regionVal) {
-    $.get('/assets/json/utils.json', (json, status)=>{
+    $.get('../assets/json/utils.json', (json, status)=>{
         if (status === 'success'){
             $.each(json.type.xfuel[regionVal].bases, (i, local)=>{
                 $('#local').append(`<option value="${local}">${local.toUpperCase()}</option>`);
@@ -49,7 +49,7 @@ function emptyForm(){
     $('#x-fuel').val(null);
     $('input[type="date"]').val(null);
     $('.row').removeClass('alert');
-    $('#type, #region, #local').empty().append('<option></option>');
+    $('#type, #region, #local, #reason').empty().append('<option></option>');
     $('#region, #local, #reason').parent().addClass('disable');
     $('#x-fuel, #region, #local, #reason').prop('required', false);
     
@@ -64,13 +64,15 @@ function inputData(e) {
     if (validateForm()){
         $.ajax({
             type: "POST",
-            url: "/api-xfuel/action.php",
+            url: "/xfuel",
             data: $('form').serialize(),
             success: (response)=>{
                 console.log('response :', response);
-                // loadList('all');
-                // $('#div-msg').text("Registro inserido com sucesso!")
-                // hidde();
+                if (response.id !== ""){
+                    loadList('all');
+                    $('#div-msg').text("Registro inserido com sucesso!")
+                    hidde();
+                }
             },
             error: (e)=>{
                 console.log('e :', e.responseText);

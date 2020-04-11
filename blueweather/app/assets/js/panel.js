@@ -1,37 +1,26 @@
 $(document).ready(()=>{
-    let content = $('#content');
-    content.remove('.brick');
-    
-    const dtStart = getCurrentDate();
-    const uri = "/api-xfuel/action.php?"
-    + "filter=all"
-    + "&date_start=" + dtStart;
-    $.ajax({
-        type: "GET",
-        url: uri
-    }).done(function (result) {
-        loadData(result);
-    }).fail(function (d, status){
-        alert (status);
-    });
-    
-    let blocks = $('.div-block');
-    blocks.toggle().toggle(1000);
+    $('#content').remove('.brick');
+    $.get("/xfuel", loadData);
 });
 
-
-function loadData(data){
-    $(data).each((i, item)=>{
-        const region = item.REGION.toLowerCase();
-        
-        $(`#${region}`).append(createBrick(item.LOCATION, item.XFUEL_VALUE, item.REASON));
-        console.log(item);
-    });
+function loadData(data, status){
+    if (status === 'success'){
+        $(data).each((i, item)=>{
+            const region = item.REGION.toLowerCase();
+            $(`#${region}`).append(createBrick(item.LOCATION, item.XFUEL_VALUE, item.REASON));
+            // console.log(item);
+        });
+    }
+    else{
+        console.log(status);
+        alert (status);
+    }
     
     $('.div-block').each((i, item)=>{
-        if ($(item).children > 5) $(item).addClass('div-block-grid2');
-        else $(item).addClass('div-block-grid1');
-    });
+        let grid = (item.childElementCount > 5) ? 'div-block-grid2' : 'div-block-grid1';
+        $(item).addClass(grid);
+    })
+    .toggle().toggle(1000);
 }
 
 function createBrick(name, qtyFuel, reason){
@@ -47,7 +36,7 @@ function createBrick(name, qtyFuel, reason){
 
     let divName = document.createElement("div");
     $(divName).addClass('base-name');
-    $(divName).text(name);
+    $(divName).text(name.toUpperCase());
 
     let brick = document.createElement("div");
     $(brick).addClass(`brick ${reason.toLowerCase()}-border`);

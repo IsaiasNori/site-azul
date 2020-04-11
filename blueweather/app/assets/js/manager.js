@@ -3,14 +3,13 @@ $(document).ready(()=>{ loadList('all'); });
 
 // To load list of registers from database
 function loadList(sort){
-    const dtStart = getCurrentDate();
-    const uri = `/api-xfuel/action.php?filter=${sort}&date_start=${dtStart}`;
+    const uri = `/xfuel/?sort=${sort}`;
 
     $.ajax({
         type: "GET",
         url: uri,
         success: (result)=>{
-            // console.log('success: ', result);
+            console.log('success: ', result);
             createTable(result);
         },
         error: (e)=>{
@@ -72,7 +71,7 @@ $('.switch').click((e) => {
 $('.new-icon').click(() => {
     $('.hidden').addClass('reveal');
     $('.reveal').removeClass('hidden');
-    $('#content-form').load('/forms/insert-form.php');
+    $('#content-form').load('../forms/insert-form.php');
 });
 
 $('#table-body').click((e)=>{

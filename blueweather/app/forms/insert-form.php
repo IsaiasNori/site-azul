@@ -1,6 +1,4 @@
-<link rel="stylesheet" href="/assets/css/insert-form.css">
-
-
+<link rel="stylesheet" href="../assets/css/insert-form.css">
 
 <form>
     <div id="form-head">
@@ -51,4 +49,4 @@
         </fieldset>
     </div>
 </form>
-<script src="/assets/js/insert-form.js"></script>
+<script src="../assets/js/insert-form.js"></script>

@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 
 <html lang="pt-BR">
@@ -5,9 +6,9 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="https://fonts.googleapis.com/css?family=Roboto:400,700,900&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="/assets/css/xfuel-manager.css">
-        <script src="/assets/jquery/jquery-3.4.1.min.js"></script>
-        <script src="/assets/date/date-format.js"></script>
+        <link rel="stylesheet" href="/app/assets/css/manager.css">
+        <script src="/app/assets/jquery/jquery-3.4.1.min.js"></script>
+        <script src="/app/assets/date/date-format.js"></script>
         <title>Blue Weather Management</title>
     </head>
 
@@ -16,8 +17,7 @@
         <nav>
             <div id="div-msg"></div>
             <div id="nav-menu">
-                <a href="/">Home</a>
-                <a href="/panel/panel.php">Painel</a>
+                <a href="panel/panel.php">Painel</a>
             </div>
         </nav>
         <main center>
@@ -30,6 +30,7 @@
                         <button id="midwest" class="switch off">C.OESTE</button>
                         <button id="southeast" class="switch off">SUDESTE</button>
                         <button id="south" class="switch off">SUL</button>
+                        <button id="tma" class="switch off">TMAs</button>
                         <button id="info" class="switch off">INFO</button>
                     </div>
 
@@ -61,6 +62,6 @@
             <div id="content-form"></div>
         </div>
         
-        <script src="/assets/js/xfuel-manager.js"></script>
+        <script src="/app/assets/js/manager.js"></script>
     </body>
 </html>
