@@ -1,48 +1,48 @@
-// On Load
-$(document).ready(()=>{ loadList('all'); });
-
 // To load list of registers from database
 function loadList(sort){
-    const uri = `/xfuel/?sort=${sort}`;
-
-    $.ajax({
-        type: "GET",
-        url: uri,
-        success: (result)=>{
-            console.log('success: ', result);
-            createTable(result);
-        },
-        error: (e)=>{
-            // console.log('erro: ', e.responseText);
+    $.get(`/xfuel/?sort=${sort}`,(response, status)=>{
+        if (status === "success") {
+            console.log('success: ', response);
+            createTable(response);
+        }
+        else {
+          // console.log('erro: ', response.responseText);
             alert('Erro no servidor\nContate o administrador');
         }
     });
 }
 
-// To create table from json
+// To create table from server json
 function createTable (data) {
     const tb = document.createElement("table");
 
     if (data.length > 0) {
         $.each(data, (i, item) => {
-            let start = new Date(item.DATE_START);
-            let finish = new Date(item.PLANNED_END);
+            let start     = new Date(item.DATE_START);
+            let end    = new Date(item.PLANNED_END);
+            let today     = new Date();
+
+            let startTd   = hourToString(start.getHours(), start.getMinutes());
+            let endTd     = hourToString(end.getHours(), end.getMinutes());
+
+            startTd = (start.getDay() > today.getDay()) ? `<td>${startTd}+</td>` : `<td>${startTd}</td>`;
+            endTd   = (end.getDay() > today.getDay()) ? `<td>${endTd}+</td>` : `<td>${endTd}</td>`;
 
             let tr = document.createElement("tr");
-            $(tr).attr('value', i);
 
-            $(tr).append(`<td>${item.TYPE}</td>`);
-            $(tr).append(`<td>${item.LOCATION}</td>`);
+            $(tr).attr('value', item.ID);
+            $(tr).append(`<td>${item.TYPE.toUpperCase()}</td>`);
+            $(tr).append(`<td>${item.LOCATION.toUpperCase()}</td>`);
             $(tr).append(`<td>${item.XFUEL_VALUE} MIN</td>`);
-            $(tr).append(`<td>${item.REASON}</td>`);
-            $(tr).append(`<td>${hourToString(start.getHours(), start.getMinutes())}</td>`);
-            $(tr).append(`<td>${hourToString(finish.getHours(), finish.getMinutes())}</td>`);
+            $(tr).append(`<td>${item.REASON.toUpperCase()}</td>`);
+            $(tr).append(startTd);
+            $(tr).append(endTd);
             $(tb).append(tr);
         });
     }else{
         let tr = '<tr>'
         for (i=0; i<6; i++){
-            var td = td + '<td>-</td>';
+            var td = td + '<td></td>';
         }
         tr = tr + td + '</tr>'
         $(tb).append(tr);
@@ -59,9 +59,6 @@ $('.switch').click((e) => {
     const id = e.target.id;
 
     $('.switch').removeClass('on');
-    $('.switch').addClass('off');
-
-    $(e.target).removeClass('off');
     $(e.target).addClass('on')
 
     loadList(id);
@@ -86,7 +83,8 @@ $('#table-body').click((e)=>{
     $('#div-msg').empty();
 });
 
-
+// On Load
+$(document).ready(()=>{ loadList('all'); });
 
 
 

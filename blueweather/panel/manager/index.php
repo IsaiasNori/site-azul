@@ -14,34 +14,30 @@
 
     <body>
         <header></header>
-        <nav>
-            <div id="div-msg"></div>
-            <div id="nav-menu">
-                <a href="../">Painel</a>
-            </div>
-        </nav>
-        <main center>
+        <div id="div-status">
+            <label id="status-msg">Teste Teste Teste Teste</label>
+        </div>
+        <main>
             <div id="content">
                 <div id="menu-bar" center>
-                    <div id="div-options">
+                    <div id="switchs">
                         <button id="all" class="switch on">TODOS</button>
-                        <button id="north" class="switch off">NORTE</button>
-                        <button id="northeast" class="switch off">NORDESTE</button>
-                        <button id="midwest" class="switch off">C.OESTE</button>
-                        <button id="southeast" class="switch off">SUDESTE</button>
-                        <button id="south" class="switch off">SUL</button>
-                        <button id="tma" class="switch off">TMAs</button>
-                        <button id="info" class="switch off">INFO</button>
+                        <button id="north" class="switch">NORTE</button>
+                        <button id="northeast" class="switch">NORDESTE</button>
+                        <button id="midwest" class="switch">C.OESTE</button>
+                        <button id="southeast" class="switch">SUDESTE</button>
+                        <button id="south" class="switch">SUL</button>
+                        <button id="tma" class="switch">TMAs</button>
+                        <button id="info" class="switch">INFO</button>
                     </div>
-
-                    <div id="action-menu">
-                        <span  class="icons new-icon"></span>
-                        <span  class="icons edit-icon"></span>
-                        <span  class="icons delete-icon"></span>
+                    <div id="icons">
+                        <div class="icon new-icon"></div>
+                        <div class="icon edit-icon"></div>
+                        <div class="icon delete-icon"></div>
                     </div>
                 </div>
 
-                <div id="xfuel-table">
+                <div id="div-table">
                     <div id="table-head">
                         <span>TIPO</span>
                         <span>LOCAL</span>
