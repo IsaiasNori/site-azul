@@ -42,27 +42,27 @@
 		</header>
 
 		<div id="content">
-			<div id="north" class="div-block other-border">
+			<div id="north" class="div-block">
 				<div class="div-region-title">NORTE</div>
 			</div>
 
-			<div id="northeast" class="div-block other-border">
+			<div id="northeast" class="div-block">
 				<div class="div-region-title">NORDESTE</div>
 			</div>
 			
-			<div id="midwest" class="div-block other-border">
+			<div id="midwest" class="div-block">
 				<div class="div-region-title">CENTRO</div>
 			</div>
 			
-			<div id="southeast" class="div-block other-border">
+			<div id="southeast" class="div-block">
 				<div class="div-region-title">SUDESTE</div>
 			</div>
 			
-			<div id="south" class="div-block other-border">
+			<div id="south" class="div-block">
 				<div class="div-region-title">SUL</div>
 			</div>
 			
-			<div id="tma" class="div-block other-border">
+			<div id="tma" class="div-block">
 				<div class="div-region-title">TMA</div>
 			</div>
 		</div>
