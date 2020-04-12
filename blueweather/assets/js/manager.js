@@ -71,7 +71,7 @@ $('.switch').click((e) => {
 $('.new-icon').click(() => {
     $('.hidden').addClass('reveal');
     $('.reveal').removeClass('hidden');
-    $('#content-form').load('../forms/insert-form.php');
+    $('#content-form').load('insert-form.php');
 });
 
 $('#table-body').click((e)=>{

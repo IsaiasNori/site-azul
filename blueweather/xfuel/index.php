@@ -1,39 +1,30 @@
 <?php
+$root = dirname(__DIR__, 2);
 
-// echo '<h1>Caralho</h1><hr>';
-// chmod (dirname(__DIR__), 0755);
-// chmod (dirname(__DIR__) . "/" . __FILE__, 0755);
-include_once dirname(__DIR__, 2) . "/src/controller/xfuelcontroller.php";
-include_once dirname(__DIR__, 2) . "/src/model/xfueldao.php";
-include_once dirname(__DIR__, 2) . "/src/database/database.php";
+include_once ("$root/src/controller/xfuelcontroller.php");
+include_once ("$root/src/model/xfueldao.php");
+include_once ("$root/src/database/database.php");
 
 try {
+    $database = new DataBase();
+    $xfueldao = new XfuelDAO($database);
+    
     switch ($_SERVER['REQUEST_METHOD']){
         case 'GET':
-            if (isset($_GET)){     
-                $database = new DataBase();
-                $xfueldao = new XfuelDAO($database);
-                $controller = new XfuelController($_GET, $xfueldao);
-                $response = $controller->search();
-            }
-            else{
-                echo 'Method Unavailable';
-            }
+            if (!isset($_GET)){ return 'Method Unavailable'; }
+
+            $controller = new XfuelController($_GET, $xfueldao);
+            $response = $controller->search();
         break;
         
         case 'POST':
-            if (isset($_POST)){
-                $database = new DataBase(); 
-                $xfueldao = new XfuelDAO($database);
-                $controller = new XfuelController($_POST, $xfueldao);
-                $response = $controller->insert();
-            }
-            else{
-                echo 'Method Unavailable';
-            }
+            if (!isset($_POST)){ return 'Method Unavailable'; }
+
+            $controller = new XfuelController($_POST, $xfueldao);
+            $response = $controller->insert();
         break;
         
-        default: echo 'Method Unavailable';
+        default: return 'Method Unavailable';
     }
 
     header('Content-Type: application/json; charset=utf-8');

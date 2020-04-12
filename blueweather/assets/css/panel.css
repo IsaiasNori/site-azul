@@ -141,11 +141,11 @@ header h2 { font-size: 2vw; }
 
 
 /* Customized */
-.wxx-border { border-radius: 5px; border: 1.2px solid rgba(60, 20, 255, 0.8); }
-.atc-border { border-radius: 5px; border: 1.2px solid rgba(255, 210, 75, 0.8); }
+.wxx-border { 	border-radius: 5px; border: 1.2px solid rgba(60, 20, 255, 0.8); }
+.atc-border { 	border-radius: 5px; border: 1.2px solid rgba(255, 210, 75, 0.8); }
 .other-border {	border-radius: 5px; border: 1.2px solid rgba(255, 255, 255, 0.5); }
 
-.green {  background-image: url("/app/assets/images/gifs/green-dot.gif"); }
-.yellow { background-image: url("/app/assets/images/gifs/yellow-dot.gif"); }
-.red { background-image: url("/app/assets/images/gifs/red-dot.gif"); }
-.white { background-image: url("/app/assets/images/icons/dots/white-dot.png"); }
+.green {	background-image: url("/assets/image/img/dot/green-dot.png"); }
+.yellow { 	background-image: url("/assets/image/img/dot/yellow-dot.png"); }
+.red {		background-image: url("/assets/image/img/dot/red-dot.png"); }
+.white {	background-image: url("/assets/image/img/dot/white-dot.png"); }

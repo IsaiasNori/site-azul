@@ -179,9 +179,7 @@ main {
 
 .icons:hover { border: 1px solid rgb(0, 0, 0); }
 
-.new-icon { background-image: url("../images/icons/new-icon.png");}
-.edit-icon { background-image: url("../images/icons/edit-icon.png");}
-.delete-icon { background-image: url("../images/icons/delete-icon.png");}
+
 
 
 /* CUSTOMIZED ROWS */
@@ -213,3 +211,8 @@ main {
     border: 1.5px solid black;
     border-radius: 5px;
 }
+
+
+.new-icon {     background-image: url("/assets/image/icon/new-icon.png");}
+.edit-icon {    background-image: url("/assets/image/icon/edit-icon.png");}
+.delete-icon {  background-image: url("/assets/image/icon/delete-icon.png");}

@@ -4,9 +4,9 @@
 	<head>
 		<meta charset="UTF-8">
 		<meta http-equiv="refresh" content="120"/>
-		<link rel="stylesheet" href="/app/assets/css/panel.css">
-		<script src="/app/assets/date/date-format.js"></script>
-		<script src="/app/assets/jquery/jquery-3.4.1.min.js"></script>
+		<link rel="stylesheet" href="/assets/css/panel.css">
+		<script src="/assets/common/date/date-format.js"></script>
+		<script src="/assets/common/jquery/jquery-3.4.1.min.js"></script>
 		<title>Panel X-Fuel</title>
 	</head>
 
@@ -26,7 +26,7 @@
 						Atualizado em:
 						<?php	
 							date_default_timezone_set('UTC');
-							print date('d-m-Y  - H:i');
+							print date('d-m-Y - H:i');
 						?>
 					</div>
 				</div>
@@ -75,6 +75,6 @@
 			<div class="div-infoadd"></div>
 		</div>
 		
-		<script src="/app/assets/js/panel.js"></script>
+		<script src="/assets/js/panel.js"></script>
 	</body>
 <html>

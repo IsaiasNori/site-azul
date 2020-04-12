@@ -6,9 +6,9 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="https://fonts.googleapis.com/css?family=Roboto:400,700,900&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="/app/assets/css/manager.css">
-        <script src="/app/assets/jquery/jquery-3.4.1.min.js"></script>
-        <script src="/app/assets/date/date-format.js"></script>
+        <link rel="stylesheet" href="/assets/css/manager.css">
+        <script src="/assets/common/jquery/jquery-3.4.1.min.js"></script>
+        <script src="/assets/common/date/date-format.js"></script>
         <title>Blue Weather Management</title>
     </head>
 
@@ -17,7 +17,7 @@
         <nav>
             <div id="div-msg"></div>
             <div id="nav-menu">
-                <a href="panel/panel.php">Painel</a>
+                <a href="../">Painel</a>
             </div>
         </nav>
         <main center>
@@ -62,6 +62,6 @@
             <div id="content-form"></div>
         </div>
         
-        <script src="/app/assets/js/manager.js"></script>
+        <script src="/assets/js/manager.js"></script>
     </body>
 </html>

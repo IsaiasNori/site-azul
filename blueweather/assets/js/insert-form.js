@@ -1,6 +1,6 @@
 function initialize(eraser = true){
     emptyForm();
-    $.get('../assets/json/utils.json', (json, status)=>{
+    $.get('/assets/common/json/utils.json', (json, status)=>{
         if (status === 'success'){
             $.each(json.type, (key)=>{
                 let opt = key==='alert' ? "ALERTA" : key.toUpperCase();
@@ -14,7 +14,7 @@ function initialize(eraser = true){
 }
 
 function loadRegion() {
-    $.get('../assets/json/utils.json', (json, status)=>{
+    $.get('/assets/common/json/utils.json', (json, status)=>{
         if (status === 'success'){
             $('#region, #local, #reason').parent().removeClass('disable');
             $('#x-fuel, #region, #local, #reason').prop('required', true);
@@ -31,7 +31,7 @@ function loadRegion() {
 }
 
 function loadLocal(regionVal) {
-    $.get('../assets/json/utils.json', (json, status)=>{
+    $.get('/assets/common/json/utils.json', (json, status)=>{
         if (status === 'success'){
             $.each(json.type.xfuel[regionVal].bases, (i, local)=>{
                 $('#local').append(`<option value="${local}">${local.toUpperCase()}</option>`);
@@ -91,15 +91,14 @@ function validateForm () {
 
 
     if(start < currentTime) {$('#start-dt').focus(); msg(`Data Inicial deve ser maior que a Atual`); return false;}
-    if(end <= start) {$('#start-dt').focus(); msg('Data final deve ser maior que Data Inicial'); return false;}
+    if(end <= start) {$('#end-dt').focus(); msg('Data final deve ser maior que Data Inicial'); return false;}
 
     return true;
 }
 
 // To hidden the 'hidde' div (form)
 function hidde () {
-    $('.reveal').addClass('hidden');
-    $('.reveal').removeClass('reveal');
+    $('.reveal').addClass('hidden').removeClass('reveal');
     $('#content-form').empty();
 }
 
