@@ -1,0 +1,54 @@
+{
+    "types": {
+        "xfuel": "EXTRA FUEL",
+        "alert": "ALERTA"
+    },
+
+    "regions": {
+        "north": {
+            "label": "NORTE",
+            "locals": [
+                "bel",
+                "mao",
+                "stm",
+                "mcp"
+            ]
+        },
+        "northeast": {
+            "label": "NORDESTE",
+            "locals": []
+        },
+        "midwest": {
+            "label": "CENTRO",
+            "locals": []
+        },
+        "southeast": {
+            "label": "SUDESTE",
+            "locals": [
+                "vcp",
+                "rao",
+                "cgh",
+                "gru",
+                "gig"
+            ]
+        },
+        "south": {
+            "label": "SUL",
+            "locals": []
+        },
+        "tma": {
+            "label": "TMA",
+            "locals": [
+                "sp",
+                "rj",
+                "bh"
+            ]
+        }
+    },
+
+    "reasons": {
+        "wxx": "WXX",
+        "atc": "ATC",
+        "other": "OUTROS"
+    }
+}

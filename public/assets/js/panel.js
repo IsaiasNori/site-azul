@@ -1,11 +1,12 @@
-function loadData(data, status){
+function loadData(response, status){
     $('#content').remove('.brick').show();
 
     if (status === 'success'){
-        $(data).each(createBrick);
+        // console.log('response :', response);
+        $(response).each(createBrick);
     }
     else{
-        console.log(status);
+        // console.log('status :', status);
         alert (status);
     }
 
