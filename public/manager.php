@@ -4,16 +4,27 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="refresh" content="480" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,700,900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/manager.css">
     <script src="assets/lib/jquery/jquery-3.4.1.min.js"></script>
     <script src="assets/lib/date/date-format.js"></script>
-    <title>Blue Weather Management</title>
+    <title>BlueWeather Management</title>
 </head>
 
 <body>
-    <header></header>
+    <header>
+        <div id="title-header">
+            <h1>Bl<font color="#5F87FF">u</font>e Weather</h1>
+        </div>
+
+        <div id="middle-header">
+            <h2>Extra Fuel Aplicado</h2>
+            <div id="update-div"><?php print date('H:i,  M d'); ?>
+            </div>
+        </div>
+    </header>
     <div id="div-status" flex-center>
         <label id="status-msg"></label>
     </div>
@@ -21,7 +32,7 @@
         <div id="content">
             <div id="menu-bar">
                 <div id="switchs">
-                    <button id="alert" class="switch on">ALERTAS</button>
+                    <button id="alert" class="switch">ALERTAS</button>
                     <button id="north" class="switch">NORTE</button>
                     <button id="northeast" class="switch">NORDESTE</button>
                     <button id="midwest" class="switch">C.OESTE</button>

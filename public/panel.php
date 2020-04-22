@@ -8,7 +8,7 @@
 	<link rel="stylesheet" href="assets/css/panel.css">
 	<script src="assets/lib/date/date-format.js"></script>
 	<script src="assets/lib/jquery/jquery-3.4.1.min.js"></script>
-	<title>Panel X-Fuel</title>
+	<title>BlueWeather Panel</title>
 </head>
 
 <body>
@@ -22,7 +22,7 @@
 		<div class="div-in-header">
 			<div id="middle-header">
 				<h2>Extra Fuel Aplicado</h2>
-				<div id="update-div">Atualizado em:<?php print date('d-m-Y - H:i'); ?>
+				<div id="update-div"><?php print date('H:i,  M d'); ?>
 				</div>
 			</div>
 		</div>

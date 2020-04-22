@@ -1,6 +1,5 @@
 // To load list of registers from database
 function loadList(filter = 'alert') {
-    $('.on').removeClass('on');
     $(`#${filter}`).addClass('on');
     $.get(`xfuel.php?region=${filter}`, (response, status) => {
         if (status === "success") {
@@ -8,25 +7,22 @@ function loadList(filter = 'alert') {
             createTable(response, filter);
         } else {
             // console.log('erro: ', response.responseText);
-            alert('Erro no servidor\nContate o administrador');
+            msg(`Erro no servidor: ${status}`);
         }
     });
 }
 
-// To create table from server json
+// To create table from server data
 function createTable(data, filter) {
-    let today = new Date();
     const tableHead = $('#table-head');
     const tableBody = $('#table-body');
-
-    const table = document.createElement("table");
+    const innerTable = document.createElement("table");
 
     tableHead.empty().removeClass('columns-4').removeClass('columns-3');
     tableBody.empty();
     $('tr').removeClass('columns-4').removeClass('columns-3');
 
     if (data.length > 0) {
-
         if (filter === 'alert') {
             tableHead.addClass('columns-3');
             tableHead.append('<span>XFUEL</span>');
@@ -35,19 +31,15 @@ function createTable(data, filter) {
 
             $(data).each((i, item) => {
                 let tr = document.createElement("tr");
-                // let end = new Date(item.date_end);
-                // let endTm = hourToString(end.getHours(), end.getMinutes());
-                // endTm = (end.getDay() > today.getDay()) ? `<td>${endTm}+</td>` : `<td>${endTm}</td>`;
-                let dt = dateFormat(item.date_end);
+                let dtFinish = dateFormat(item.date_end);
 
-                $(tr).attr('value', item.id).attr('class', 'columns-3');
+                $(tr).attr('id', item.id).attr('value', 'ALERTA').attr('class', 'columns-3');
                 $(tr).append(`<td>${item.xfuel_value} MIN</td>`);
                 $(tr).append(`<td>${item.remark.toUpperCase()}</td>`);
-                // $(tr).append(endTm);
-                $(tr).append(`<td>${dt}</td>`);
-                $(table).append(tr);
-            });
+                $(tr).append(`<td>${dtFinish}</td>`);
 
+                $(innerTable).append(tr);
+            });
         } else {
             tableHead.addClass('columns-4');
             tableHead.append('<span>LOCAL</span>');
@@ -57,48 +49,67 @@ function createTable(data, filter) {
 
             $(data).each((i, item) => {
                 let tr = document.createElement("tr");
-                // let end = new Date(item.date_end);
-                // let endTm = hourToString(end.getHours(), end.getMinutes());
-                // endTm = (end.getDay() > today.getDay()) ? `<td>${endTm}+</td>` : `<td>${endTm}</td>`;
-                let dt = dateFormat(item.date_end);
+                let dtFinish = dateFormat(item.date_end);
 
-                $(tr).attr('value', item.id).attr('class', 'columns-4');
+                $(tr).attr('id', item.id).attr('value', item.local.toUpperCase()).attr('class', 'columns-4');
                 $(tr).append(`<td>${item.local.toUpperCase()}</td>`);
                 $(tr).append(`<td>${item.xfuel_value} MIN</td>`);
                 $(tr).append(`<td>${item.reason.toUpperCase()}</td>`);
-                $(tr).append(`<td>${dt}</td>`);
-                // $(tr).append(endTm);
-                $(table).append(tr);
+                $(tr).append(`<td>${dtFinish}</td>`);
+
+                $(innerTable).append(tr);
             });
-
         }
-
-        tableBody.append(table);
-
+        tableBody.append(innerTable);
     } else {
-
-        tableHead.append("<span> NILL </span>");
-
+        msg('Vazio!');
     }
+}
 
+function deleteRow() {
+    let reg = $('.selected').attr('value');
+    let id = $('.selected').attr('id');
+
+    let decision = confirm(`O Registro ${reg} será excluído premanentemente.\nDeseja continuar?`);
+
+    if (decision) {
+        $.ajax({
+            type: 'DELETE',
+            url: `xfuel.php?id=${id}`,
+            success: (response) => {
+                msg(response);
+                let filter = $('.on').attr('id');
+                loadList(filter);
+                // console.log('response :', response);
+            },
+            error: (e) => {
+                msg(e.resposeText)
+                // console.log('e :', e);
+            }
+        });
+    }
 }
 
 // Insert status msg
 function msg(text) {
-    $('#status-msg').text(text);
+    $('#status-msg').empty().text(text);
 }
 
 // To filter list from regions
 $('.switch').click((e) => {
-    $('.on').removeClass('on');
-    $(e.target).addClass('on');
-
+    $('.switch').removeClass('on');
     loadList(e.target.id);
 });
 
 // To open form
 $('.new-icon').click(() => {
     $('#placeholder-form').removeClass('hidden').load('insert-form.php');
+});
+
+$('.delete-icon').click(() => {
+    if ($('.selected').length > 0) {
+        deleteRow();
+    }
 });
 
 // Select or deselect table row
@@ -111,7 +122,7 @@ $('#table-body').click((e) => {
 
 // Clear status msg
 $('main').click(() => {
-    msg(null)
+    msg("");
 });
 
 // On ready: load list

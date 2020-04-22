@@ -37,14 +37,17 @@ class DataBase
                 foreach ($filters as $key => $value) {
                     $stmt->bindValue(":{$key}", $value);
                 }
+            }
 
-                $stmt->execute();
-
+            if ($stmt->execute()) {
                 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                     array_push($results, $row);
                 }
+
+                return $results;
+            } else {
+                die('Error: DataBase!');
             }
-            return $results;
         } catch (Throwable $e) {
             die($e);
         }
@@ -86,7 +89,15 @@ class DataBase
 
     function delete($id)
     {
-        return "delete";
+        if ($id !== "") {
+            $sql = "DELETE FROM $this->table WHERE id = :id";
+            $stmt = $this->cn->prepare($sql);
+            $stmt->bindValue(":id", $id, PDO::PARAM_INT);
+            if ($stmt->execute()) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private static function filtersToSelectString($arr)

@@ -1,55 +1,115 @@
-function initialize(eraser = true) {
+var utils = "";
+
+function initialize() {
     emptyForm();
     $.get('assets/lib/json/utils.json', (json, status) => {
-        if (status === 'success') {
+        if (status === "success") {
+            $('#type').empty().append('<option></option>');
             $.each(json.types, (index, type) => {
                 $('#type').append(`<option value="${index}">${type}</option>`);
             });
-            if (!eraser) {
-                $('#type option[value="alert"]').prop('selected', true);
-            }
+            utils = json;
         } else {
-            msg('Servidor indisponível!');
+            alert('Servidor indisponível\nTente Novamente Mais Tarde!');
         }
     });
 }
 
 function loadRegion() {
-    $.get('assets/lib/json/utils.json', (json, status) => {
-        if (status === 'success') {
-            $('#region, #local, #reason').parent().removeClass('disable').prop('required', true);;
-            $.each(json.regions, (index, region) => {
-                $('#region').append(`<option value="${index}">${region.label}</option>`);
-            });
-            $.each(json.reasons, (index, reason) => {
-                $('#reason').append(`<option value="${index}">${reason}</option>`);
-            });
-        } else {
-            msg('Servidor indisponível!');
-        }
+    let json = utils;
+    $('#region').empty().append('<option></option>').prop('required', true).parent().removeClass('disable');
+    $.each(json.regions, (index, region) => {
+        $('#region').append(`<option value="${index}">${region.label}</option>`);
     });
 }
 
-function loadLocal(regionVal) {
-    $.get('assets/lib/json/utils.json', (json, status) => {
-        if (status === 'success') {
-            $.each(json.regions[regionVal].locals, (index, local) => {
-                $('#local').append(`<option value="${local}">${local.toUpperCase()}</option>`);
-            });
-        } else {
-            msg('Servidor indisponível!');
-        }
+function loadLocal() {
+    let json = utils;
+    let region = $('#region').val();
+    $('#local, #xfuel_value').empty().prop('required', true).parent().removeClass('disable');
+    $('#local').append('<option></option>');
+    $.each(json.regions[region].locals, (index, local) => {
+        $('#local').append(`<option value="${local}">${local.toUpperCase()}</option>`);
     });
 }
+
+function loadReason() {
+    let json = utils;
+    $('#reason').empty().append('<option></option>').prop('required', true).parent().removeClass('disable');
+    $.each(json.reasons, (index, reason) => {
+        $('#reason').append(`<option value="${index}">${reason}</option>`);
+    });
+}
+
+function inputData(e) {
+    e.preventDefault();
+    let data = validateForm();
+    if (!data) {
+        return;
+    } else {
+        $.ajax({
+            type: "POST",
+            url: "xfuel.php",
+            data: data,
+            success: (response) => {
+                if (response.id !== "") {
+                    alert("Registro inserido com sucesso!");
+                    loadList();
+                    closeForm();
+                }
+            },
+            error: (e) => {
+                emptyForm();
+                alert(e.responseText);
+            }
+        });
+
+    }
+}
+
+
+function validateForm() {
+    let currentTime = new Date();
+    let start = new Date(`${$('#start-dt').val()} ${$('#start-tm').val()}`);
+    let end = new Date(`${$('#end-dt').val()} ${$('#end-tm').val()}`);
+
+
+    if (start < currentTime) {
+        alert(`Data Inicial deve ser maior que a Atual`);
+        $('#start-dt').focus();
+        return false;
+    }
+    if (end <= start) {
+        alert('Data final deve ser maior que Data Inicial');
+        $('#end-dt').focus();
+        return false;
+    }
+
+    start = `${$('#start-dt').val()} ${$('#start-tm').val()}`;
+    end = `${$('#end-dt').val()} ${$('#end-tm').val()}`;
+
+    var data = {
+        xfuel_value: $('#xfuel_value').val(),
+        type: $('#type').val(),
+        region: $('#region').val(),
+        local: $('#local').val(),
+        reason: $('#reason').val(),
+        date_start: start,
+        date_end: end,
+        remark: $('#remark').val(),
+        user_create: $('#user_create').val(),
+        user_change: $('#user_change').val()
+    };
+
+    return data;
+}
+
 
 function emptyForm() {
-
-    $('[field]').val(null);
-    $('#type, #region, #local, #reason').empty().append('<option></option>');
-    $('#region, #local, #reason').parent().addClass('disable');
-    $('#messages').empty();
-    $('.row').removeClass('alert');
-    $('#xfuel_value, #region, #local, #reason, #remark').prop('required', false);
+    $("#type").val(null);
+    $('#region, #local, #reason, #start-tm, #end-tm').empty();
+    $('#xfuel_value, #start-dt, #end-dt, #remark').val("");
+    $('#xfuel_value, #region, #local, #reason, #remark').prop('required', false).parent().addClass('disable');
 
     for (let i = 0; i < 24; i++) {
         const h = (i.toString().length < 2) ? `0${i.toString()}:00` : `${i.toString()}:00`;
@@ -57,73 +117,22 @@ function emptyForm() {
     };
 }
 
-function inputData(e) {
-    e.preventDefault();
-    if (validateForm()) {
-        let filter = $('#region').val();
-        $.ajax({
-            type: "POST",
-            url: "xfuel.php",
-            data: $('form').serialize(),
-            success: (response) => {
-                if (response.id !== "") {
-                    closeForm();
-                    loadList(filter);
-                    msg("Registro inserido com sucesso!");
-                }
-            },
-            error: (e) => {
-                console.log('e :', e.responseText);
-                msg('Servidor indisponível!');
-                closeForm();
-            }
-        });
-    }
-}
-
-function validateForm() {
-    // let bol = true;
-
-    let currentTime = new Date();
-    let start = new Date(`${$('#start-dt').val()} ${$('#start-tm').val()}`);
-    let end = new Date(`${$('#end-dt').val()} ${$('#end-tm').val()}`);
-
-
-    if (start < currentTime) {
-        $('#start-dt').focus();
-        msg(`Data Inicial deve ser maior que a Atual`);
-        return false;
-    }
-    if (end <= start) {
-        $('#end-dt').focus();
-        msg('Data final deve ser maior que Data Inicial');
-        return false;
-    }
-
-    $('#date_start').val(`${$('#start-dt').val()} ${$('#start-tm').val()}`);
-    $('#date_end').val(`${$('#end-dt').val()} ${$('#end-tm').val()}`);
-
-    $('#start-dt, #start-tm, #end-dt, #end-tm').remove();
-
-    return true;
-}
-
 // To close form
 function closeForm() {
     $('#placeholder-form').empty().addClass('hidden');
 }
 
-// behavior
-$('#placeholder-form').click((e) => {
-    if (e.target.id === "placeholder-form") {
+// events
+$('#content-form').click((e) => {
+    //Ao clicar fora do form. 
+    if (e.target.id === "content-form") {
         closeForm();
     }
 });
 
 $('#btn-clear').click((e) => {
     e.preventDefault();
-    initialize();
-    $('#remark').empty();
+    emptyForm();
 });
 
 $('#btn-close').click((e) => {
@@ -131,34 +140,45 @@ $('#btn-close').click((e) => {
     closeForm();
 });
 
-$('[field]').click(() => {
-    $('#messages').empty();
-    $('.row').removeClass('alert');
-});
-
 $('#type').change((e) => {
-    if (e.target.value === "") {
-        initialize();
-    } else if (e.target.value === "alert") {
-        initialize(false);
-        $('#region').val('alert');
-        $('#remark').prop('required', true);
-    } else {
+    let val = e.target.value;
+    //Necessário limpar o form ao mudar o campo Type
+    //+
+    emptyForm();
+
+    if (val === "xfuel") {
         loadRegion();
+    } else if (val === "alert") {
+        $('#xfuel_value, #remark').parent().removeClass('disable')
+        $('#remark').prop('required', true);
     }
+
+    //+
+    // por isso seto novamente o valor escolhido.
+    $(`#type option[value='${val}']`).prop('selected', true);
 });
 
 $('#region').change((e) => {
     if (e.target.value === "") {
-        initialize();
+        $('#local, #xfuel_value, #reason, #remark').empty().parent().addClass('disable');
     } else {
-        loadLocal(e.target.value);
+        loadLocal();
     }
 });
 
 $('#local').change((e) => {
     if (e.target.value === "") {
-        initialize();
+        $('#xfuel_value, #reason, #remark').empty().parent().addClass('disable');
+    } else {
+        loadReason();
+    }
+});
+
+$('#reason').change((e) => {
+    if (e.target.value === "") {
+        $('#remark').empty().parent().addClass('disable');
+    } else {
+        $('#remark').empty().parent().removeClass('disable');
     }
 });
 
