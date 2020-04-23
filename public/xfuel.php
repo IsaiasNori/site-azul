@@ -22,16 +22,36 @@ try {
             break;
 
         case 'DELETE':
-            if (!isset($_REQUEST)) {
+            if (!isset($_REQUEST) || !isset($_REQUEST['id'])) {
                 throw new Error("Error Method Unavailable", 1);
             }
             $id = intval($_REQUEST['id']);
-            $results = remove($id);
+            $closed = new DateTime('now');
+            $results = update($id, ['date_closed' => $closed->format('Y-m-d H:i')]);
             if ($results) {
                 echo ('Removido com sucesso!');
             } else {
                 throw new Error("Erro ao remover!", 1);
             }
+            break;
+
+        case 'PUT':
+            if (!isset($_REQUEST) || !isset($_REQUEST['id'])) {
+                throw new Error("Error Method Unavailable", 1);
+            }
+            $id = intval($_REQUEST['id']);
+            $closed = new DateTime('now');
+            $results = update($id, ['date_closed' => $closed->format('Y-m-d H:i')]);
+            if ($results) {
+                $params = $_REQUEST;
+                unset($params['id']);
+                $results = create($params);
+                header('Content-Type: application/json; charset=utf-8');
+                echo (json_encode($results, JSON_UNESCAPED_UNICODE));
+            } else {
+                throw new Error("Erro ao remover!", 1);
+            }
+            break;
             break;
 
         default:
@@ -83,27 +103,28 @@ function create($params)
             if (isset($check[0]['id'])) {
                 throw new Error("Processo interrompido: Registro duplicado!");
             }
-            $params['region']       = $params['region'] !== "" ? $params['region'] : false;
-            $params['reason']       = $params['reason'] !== "" ? $params['reason'] : false;
-            $params['remark']       = $params['remark'] !== "" ? $params['remark'] : "";
+            $params['region'] = $params['region'] !== "" ? $params['region'] : false;
+            $params['local'] = $params['local'] !== "" ? $params['local'] : false;
+            $params['reason'] = $params['reason'] !== "" ? $params['reason'] : false;
+            $params['remark'] = $params['remark'] !== "" ? $params['remark'] : "";
         } else if ($params['type'] === 'alert') {
             $check = ready(['remark' => $params['remark']]);
             if (isset($check[0]['id'])) {
                 throw new Error("Processo interrompido: Registro duplicado!");
             }
-            $params['region']       = $params['region'] !== "" ? $params['region'] : 'alert';
-            $params['reason']       = $params['reason'] !== "" ? $params['reason'] : 'alert';
-            $params['remark']       = $params['remark'] !== "" ? $params['remark'] : false;
+            $params['region'] = 'alert';
+            $params['local'] = 'alert';
+            $params['reason'] = 'alert';
+            $params['remark'] = $params['remark'] !== "" ? $params['remark'] : false;
         } else {
             throw new Error("Processo interrompido: Tipo de Registro Inválido!");
         }
 
-        $params['xfuel_value']  = $params['xfuel_value'] !== "" ? intval($params['xfuel_value']) : 0;
-        $params['local']        = $params['local'] !== "" ? $params['local'] : false;
-        $params['date_start']   = $params['date_start'] !== "" ? $params['date_start'] : false;
-        $params['date_end']     = $params['date_end'] !== "" ? $params['date_end'] : false;
-        $params['user_create']  = isset($params['user_create']) ? $params['user_create'] : "Teste";
-        $params['user_change']  = isset($params['user_change']) ? $params['user_change'] : "Teste";
+        $params['xfuel_value'] = $params['xfuel_value'] !== "" ? intval($params['xfuel_value']) : 0;
+        $params['date_start'] = $params['date_start'] !== "" ? $params['date_start'] : false;
+        $params['date_end'] = $params['date_end'] !== "" ? $params['date_end'] : false;
+        $params['user_create'] = isset($params['user_create']) ? $params['user_create'] : "Teste";
+        $params['user_change'] = isset($params['user_change']) ? $params['user_change'] : "Teste";
 
         if (!checkFields($params)) {
             throw new Error("Processo interrompido: O campo {checkFields($params)} é obrigatório!");
@@ -114,6 +135,17 @@ function create($params)
         }
     } catch (\Throwable $e) {
         throw new Error($e->getMessage());
+    }
+}
+
+function update($id, $params)
+{
+    try {
+        $db = new DataBase('XFUEL');
+        $result = $db->update($id, $params);
+        return $result;
+    } catch (\Throwable $e) {
+        throw new Error($e, 1);
     }
 }
 

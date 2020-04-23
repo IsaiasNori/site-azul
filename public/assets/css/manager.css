@@ -30,6 +30,16 @@ header {
     border: 2px solid rgb(0, 0, 0);
 }
 
+#home a {
+    text-decoration: none;
+    color: rgb(0, 0, 0);
+    font-size: x-large;
+    font-weight: 700;
+    background-color: #F2F2F2;
+    padding: 4px;
+    border-radius: 4px;
+}
+
 /* header {  } */
 
 /* STATUS */

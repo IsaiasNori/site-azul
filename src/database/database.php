@@ -46,16 +46,16 @@ class DataBase
 
                 return $results;
             } else {
-                die('Error: DataBase!');
+                die('Error: DataBase');
             }
         } catch (Throwable $e) {
             die($e);
         }
     }
 
-    function insert(array $params = [])
+    function insert(array $params)
     {
-        if ($params) {
+        if ($params && count($params) > 0) {
             $keysSql = "(";
             $valuesSql = "(";
             foreach ($params as $key => $value) {
@@ -74,17 +74,41 @@ class DataBase
                 $stmt->bindValue(":$key", $value);
             }
 
-            $stmt->execute();
-
-            return ["id" => $this->cn->lastInsertId()];
+            if ($stmt->execute()) {
+                return ["id" => $this->cn->lastInsertId()];
+            } else {
+                die("Error: Database");
+            }
         }
     }
 
     // abstract function getOne($columns = "*",$filters = []);
 
-    function update($keys = [], $values = [])
+    function update($id, array $params)
     {
-        return "update";
+        if ($id && $params && count($params) > 0) {
+            $setSql = " SET";
+
+            foreach ($params as $key => $value) {
+                $setSql .= " $key = :$key,";
+            }
+
+            $setSql =  substr($setSql, 0, -1);
+
+            $sql = "UPDATE $this->table $setSql WHERE id = $id";
+
+            $stmt = $this->cn->prepare($sql);
+
+            foreach ($params as $key => $value) {
+                $stmt->bindValue(":$key", $value);
+            }
+
+            if ($stmt->execute()) {
+                return ["id" => $id];
+            } else {
+                die("Error: Database");
+            }
+        }
     }
 
     function delete($id)

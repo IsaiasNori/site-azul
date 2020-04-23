@@ -1,10 +1,11 @@
 // To load list of registers from database
 function loadList(filter = 'alert') {
+    $('.switch').removeClass('on');
     $(`#${filter}`).addClass('on');
-    $.get(`xfuel.php?region=${filter}`, (response, status) => {
+    $.get(`xfuel.php?region=${filter}`, (data, status) => {
         if (status === "success") {
             // console.log('success: ', response);
-            createTable(response, filter);
+            createTable(data, filter);
         } else {
             // console.log('erro: ', response.responseText);
             msg(`Erro no servidor: ${status}`);
@@ -62,13 +63,14 @@ function createTable(data, filter) {
         }
         tableBody.append(innerTable);
     } else {
-        msg('Vazio!');
+        tableBody.append('<div flex-center><label><br><br><br>NILL</label></div>');
     }
 }
 
 function deleteRow() {
     let reg = $('.selected').attr('value');
     let id = $('.selected').attr('id');
+    let filter = $('.on').attr('id');
 
     let decision = confirm(`O Registro ${reg} será excluído premanentemente.\nDeseja continuar?`);
 
@@ -77,9 +79,8 @@ function deleteRow() {
             type: 'DELETE',
             url: `xfuel.php?id=${id}`,
             success: (response) => {
-                msg(response);
-                let filter = $('.on').attr('id');
                 loadList(filter);
+                msg(response);
                 // console.log('response :', response);
             },
             error: (e) => {
@@ -97,13 +98,17 @@ function msg(text) {
 
 // To filter list from regions
 $('.switch').click((e) => {
-    $('.switch').removeClass('on');
     loadList(e.target.id);
 });
 
-// To open form
 $('.new-icon').click(() => {
-    $('#placeholder-form').removeClass('hidden').load('insert-form.php');
+    $('#placeholder-form').addClass('POST').removeClass('hidden').load('insert-form.php');
+});
+
+$('.edit-icon').click(() => {
+    if ($('.selected').length > 0) {
+        $('#placeholder-form').addClass('PUT').removeClass('hidden').load('insert-form.php');
+    }
 });
 
 $('.delete-icon').click(() => {

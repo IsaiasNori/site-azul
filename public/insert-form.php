@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="assets/css/insert-form.css">
 
 <div id="content-form">
-    <form method="POST">
+    <form>
         <div id="form-head">
             <h1>Combustível Extra</h1>
             <div id="menu-buttons">
@@ -25,7 +25,7 @@
             </div>
             <div class="row">
                 <label for="xfuel_value">Quanto tempo de Xfuel?</label>
-                <input id="xfuel_value" name="xfuel_value" type="number" min="0" placeholder="minutos" field />
+                <input id="xfuel_value" name="xfuel_value" type="number" min="0" max="90" placeholder="minutos" field />
             </div>
             <div class="row">
                 <label for="reason">Qual o motivo do Xfuel?</label>

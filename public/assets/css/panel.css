@@ -6,135 +6,108 @@
 }
 
 body {
-	font-family: Verdana, Geneva, Tahoma, sans-serif;
-	color: #F2F2F2;
 	display: grid;
-	height: 100vh;
-	background-color: rgb(0, 0, 0);
 	grid-template-rows: 10% 1fr auto;
 	grid-template-columns: 1fr;
-	grid-template-areas: 'header''blocks''infoadd';
+	grid-template-areas: 'header''blocks''alert';
+	font-family: Verdana, Geneva, Tahoma, sans-serif;
+	height: 100vh;
+	background-color: black;
+	color: #F2F2F2;
+}
+
+h1 {
+	font-size: 5.8vh;
+}
+
+h2 {
+	font-size: 4vh;
+	font-weight: 100;
+}
+
+h4 {
+	text-align: center;
 }
 
 /* HEADER */
 header {
-	background-color: #3B3C40;
 	grid-area: header;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	overflow: hidden;
-	margin: 0.2vw 0.5vw;
+	margin: 0.5vw;
 	padding: 0 1vw;
+	background-color: #3B3C40;
 }
 
-header h2 {
-	font-size: 2vw;
-}
-
-#title-header {
-	font-size: 1.8vw;
-	font-weight: bolder;
-}
-
-#middle-header {
-	display: flex;
-	flex-direction: column;
-	justify-content: space-evenly;
-	align-items: center;
-}
-
-#update-div {
-	font-size: 1vw;
-}
-
-#legend-header {
-	display: flex;
-}
-
-.span-reason {
-	min-width: 6.5vw;
-	margin: 0 0.5vw;
-	padding: 0.4vw;
+.reason {
+	display: inline-block;
 	text-align: center;
-	font-size: 1.5vw;
-	font-weight: bolder;
+	vertical-align: middle;
+	width: 8.5vw;
+	font-size: 1.9vw;
+	padding: 1vh 0;
 }
 
 
 /* CONTENT */
-#content {
+#main {
 	grid-area: blocks;
 	display: grid;
 	grid-template-rows: repeat(3, 33.3333%);
 	grid-template-columns: repeat(2, 50%);
-	margin: 0 0.2vw;
 }
 
-.div-block {
-	background-color: #3B3C40;
+.region {
 	display: grid;
-	overflow: hidden;
+	grid-template-columns: 1.8vw 1fr;
+	background-color: #3B3C40;
 	margin: 0.3vw;
-	font-weight: bolder;
 	border-radius: 0.5vw;
 }
 
-.div-region-title {
-	grid-row-start: 1;
-	grid-row-end: 3;
+.region-name {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-	align-items: center;
-	overflow: hidden;
 	word-break: break-all;
-	max-width: 1.5vw;
-	padding-left: 0.2vw;
-	font-size: 1.4vw;
+	font-size: 2.7vh;
 	color: #BFBFBF;
 }
 
-.div-block-grid1 {
-	/* Se tiver menos de 4 bases */
-	grid-template-rows: 1fr;
-	grid-template-columns: 3% repeat(auto-fit, minmax(15%, 4fr));
+.block {
+	overflow: hidden;
 }
 
-.div-block-grid1 .base-name {
+.grid4 {
+	/* Se tiver até de 4 bases */
+	display: grid;
+	grid-template-rows: 1fr;
+	grid-template-columns: repeat(4, 25%);
+	font-weight: 900;
 	font-size: 4vw;
 }
 
-.div-block-grid1 .xfuel-content {
-	font-size: 5vw;
-}
-
-.div-block-grid1 .dot {
-	height: 2.5vw;
-	width: 2.5vw;
+.grid4 .dot {
+	height: 4vh;
+	width: 4vh;
 	background-size: cover;
 }
 
-.div-block-grid2 {
+.grid12 {
 	/* Se tiver mais de 4 bases */
-	grid-template-rows: repeat(2, 1fr);
-	grid-template-columns: 3% repeat(auto-fit, minmax(15%, 6fr));
+	display: grid;
+	grid-template-rows: repeat(2, 50%);
+	grid-template-columns: repeat(6, 16.6%);
+	font-size: 3.2vw;
 }
 
-.div-block-grid2 .base-name {
-	font-size: 2.5vw;
-}
-
-.div-block-grid2 .xfuel-content {
-	font-size: 3vw;
-}
-
-.div-block-grid2 .dot {
-	height: 2vw;
-	width: 2vw;
+.grid12 .dot {
+	height: 2.2vw;
+	width: 2.2vw;
 	background-size: cover;
 }
-
 
 .brick {
 	display: flex;
@@ -143,29 +116,53 @@ header h2 {
 	align-items: center;
 	overflow: hidden;
 	word-break: break-all;
-	margin: 0.2vw;
+	margin: 0.1vw;
 }
 
-.xfuel-content {
+.xfuel {
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	cursor: pointer;
 }
 
-.xfuel-content:hover {
+.xfuel:hover {
 	border-radius: 0.5vw;
 	background-color: #000;
 }
 
 
 /* INFOADD - IMPLEMENTAR*/
-#info-content {
-	grid-area: infoadd;
+footer {
+	grid-area: alert;
+	display: none;
+	background-color: rgb(0, 0, 0);
 }
 
+.row-alert {
+	display: grid;
+	grid-template-columns: 10% 90%;
+}
 
-/* Customized */
+.cell-alert {
+	display: flex;
+	overflow: hidden;
+	justify-content: center;
+	align-items: center;
+	height: 6vh;
+	margin: 2px;
+	background-color: #3B3C40;
+	border-radius: 4px;
+	font-size: 2vw;
+}
+
+.cell-alert .dot {
+	height: 1.5vw;
+	width: 1.5vw;
+	background-size: cover;
+}
+
+/* Borders */
 .wxx-border {
 	border-radius: 0.5vw;
 	border: 0.15vw solid rgb(30, 90, 135);
@@ -181,6 +178,7 @@ header h2 {
 	border: 0.1vw solid #BFBFBF
 }
 
+/* Dots */
 .green {
 	background-image: url("/assets/image/img/dot/green-dot.png");
 }

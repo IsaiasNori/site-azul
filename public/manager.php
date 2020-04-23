@@ -4,13 +4,12 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="refresh" content="480" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,700,900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/manager.css">
     <script src="assets/lib/jquery/jquery-3.4.1.min.js"></script>
     <script src="assets/lib/date/date-format.js"></script>
-    <title>BlueWeather Management</title>
+    <title>Management BlueWeather</title>
 </head>
 
 <body>
@@ -20,9 +19,12 @@
         </div>
 
         <div id="middle-header">
-            <h2>Extra Fuel Aplicado</h2>
-            <div id="update-div"><?php print date('H:i,  M d'); ?>
+            <h3>Extra Fuel Aplicado</h3>
+            <div id="update-div" flex-center><?php print date('H:i,  M d'); ?>
             </div>
+        </div>
+        <div id="home">
+            <a href="/">HOME</a>
         </div>
     </header>
     <div id="div-status" flex-center>
@@ -38,7 +40,7 @@
                     <button id="midwest" class="switch">C.OESTE</button>
                     <button id="southeast" class="switch">SUDESTE</button>
                     <button id="south" class="switch">SUL</button>
-                    <button id="tma" class="switch">TMAs</button>
+                    <button id="tma" class="switch">TMA</button>
                 </div>
                 <div id="icons">
                     <div class="icon new-icon"></div>
