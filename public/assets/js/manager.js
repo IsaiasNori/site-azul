@@ -1,7 +1,11 @@
 // To load list of registers from database
 function loadList(filter = 'alert') {
-    $('.switch').removeClass('on');
-    $(`#${filter}`).addClass('on');
+    $('.switch')
+        .removeClass('on');
+
+    $(`#${filter}`)
+        .addClass('on');
+
     $.get(`xfuel.php?region=${filter}`, (data, status) => {
         if (status === "success") {
             // console.log('success: ', response);
@@ -19,9 +23,16 @@ function createTable(data, filter) {
     const tableBody = $('#table-body');
     const innerTable = document.createElement("table");
 
-    tableHead.empty().removeClass('columns-4').removeClass('columns-3');
-    tableBody.empty();
-    $('tr').removeClass('columns-4').removeClass('columns-3');
+    tableHead.empty()
+        .removeClass('columns-4')
+        .removeClass('columns-3');
+
+    tableBody
+        .empty();
+
+    $('tr')
+        .removeClass('columns-4')
+        .removeClass('columns-3');
 
     if (data.length > 0) {
         if (filter === 'alert') {
@@ -34,7 +45,11 @@ function createTable(data, filter) {
                 let tr = document.createElement("tr");
                 let dtFinish = dateFormat(item.date_end);
 
-                $(tr).attr('id', item.id).attr('value', 'ALERTA').attr('class', 'columns-3');
+                $(tr).attr('id', item.id)
+                    .attr('value', 'ALERTA')
+                    .attr('title', item.remark.toUpperCase())
+                    .attr('class', 'columns-3');
+
                 $(tr).append(`<td>${item.xfuel_value} MIN</td>`);
                 $(tr).append(`<td>${item.remark.toUpperCase()}</td>`);
                 $(tr).append(`<td>${dtFinish}</td>`);
@@ -51,8 +66,13 @@ function createTable(data, filter) {
             $(data).each((i, item) => {
                 let tr = document.createElement("tr");
                 let dtFinish = dateFormat(item.date_end);
+                let remark = item.remark.toUpperCase() !== "" ? item.remark.toUpperCase() : "Sem Informação";
 
-                $(tr).attr('id', item.id).attr('value', item.local.toUpperCase()).attr('class', 'columns-4');
+                $(tr).attr('id', item.id)
+                    .attr('value', item.local.toUpperCase())
+                    .attr('title', remark)
+                    .attr('class', 'columns-4');
+
                 $(tr).append(`<td>${item.local.toUpperCase()}</td>`);
                 $(tr).append(`<td>${item.xfuel_value} MIN</td>`);
                 $(tr).append(`<td>${item.reason.toUpperCase()}</td>`);
@@ -102,18 +122,29 @@ $('.switch').click((e) => {
 });
 
 $('.new-icon').click(() => {
-    $('#placeholder-form').addClass('POST').removeClass('hidden').load('insert-form.php');
+    $('#placeholder-form')
+        .addClass('POST')
+        .removeClass('hidden')
+        .load('insert-form.php');
 });
 
 $('.edit-icon').click(() => {
     if ($('.selected').length > 0) {
-        $('#placeholder-form').addClass('PUT').removeClass('hidden').load('insert-form.php');
+        $('#placeholder-form')
+            .addClass('PUT')
+            .removeClass('hidden')
+            .load('insert-form.php');
+    } else {
+        msg('Selecione o item que deseja editar!');
     }
 });
 
-$('.delete-icon').click(() => {
+$('.delete-icon').click((e) => {
+    e.preventDefault();
     if ($('.selected').length > 0) {
         deleteRow();
+    } else {
+        msg('Selecione o item que deseja excluír!');
     }
 });
 
@@ -127,10 +158,16 @@ $('#table-body').click((e) => {
 
 // Clear status msg
 $('main').click(() => {
-    msg("");
+    setTimeout(msg, 5000, "");
 });
 
 // On ready: load list
 $(document).ready(() => {
     loadList();
 });
+
+setInterval(() => {
+        location.reload();
+    },
+    60000000
+);

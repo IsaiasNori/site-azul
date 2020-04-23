@@ -11,9 +11,11 @@ function loadData(response, status) {
         $('#main').show();
 
         $('.block').each((i, item) => {
-            let grid = (item.childElementCount < 5) ? 'grid4' : 'grid12';
-            $(item).addClass(grid);
-        }).toggle().toggle(600);
+                let grid = (item.childElementCount < 5) ? 'grid4' : 'grid12';
+                $(item).addClass(grid);
+            })
+            .toggle()
+            .toggle(600);
 
     } else {
         alert(status);
@@ -26,6 +28,7 @@ function createBrick(item) {
     const reason = item.reason;
     const local = item.local.toUpperCase();
     const xfuel = item.xfuel_value;
+    const remark = item.remark.toUpperCase() !== "" ? item.remark.toUpperCase() : "Sem Informação";
     const dotColor = fuelColor(xfuel);
 
     const brick = document.createElement("div");
@@ -33,14 +36,26 @@ function createBrick(item) {
     const divXfuel = document.createElement("div");
     const divDotColor = document.createElement("div");
 
-    $(divLocal).text(local).addClass('local');
+    $(divLocal)
+        .text(local)
+        .addClass('local');
 
-    $(divDotColor).addClass(`dot ${dotColor}`);
-    $(divXfuel).append(divDotColor).append(`${xfuel}`).addClass('xfuel');
+    $(divDotColor)
+        .addClass(`dot ${dotColor}`);
 
-    $(brick).append(divLocal).append(divXfuel).addClass(`brick ${reason}-border`);
+    $(divXfuel)
+        .append(divDotColor)
+        .append(`${xfuel}`)
+        .attr('title', remark)
+        .addClass('xfuel');
 
-    $(`#${region}`).append(brick);
+    $(brick)
+        .append(divLocal)
+        .append(divXfuel)
+        .addClass(`brick ${reason}-border`);
+
+    $(`#${region}`)
+        .append(brick);
 }
 
 function createAlert(item) {
@@ -53,13 +68,26 @@ function createAlert(item) {
     const divAlert = document.createElement('div');
     const divDotColor = document.createElement("div");
 
-    $(divDotColor).addClass(`dot ${dotColor}`);
+    $(divDotColor)
+        .addClass(`dot ${dotColor}`);
 
-    $(divXfuel).append(divDotColor).append(`${xfuel}`).addClass('cell-alert');
-    $(divAlert).append(remark).addClass('cell-alert');
-    $(rowAlert).append(divXfuel).append(divAlert).addClass('row-alert');
+    $(divXfuel)
+        .append(divDotColor)
+        .append(`${xfuel}`)
+        .addClass('cell-alert');
 
-    $('footer').append(rowAlert).show();
+    $(divAlert)
+        .append(remark)
+        .addClass('cell-alert');
+
+    $(rowAlert)
+        .append(divXfuel)
+        .append(divAlert)
+        .addClass('row-alert');
+
+    $('footer')
+        .append(rowAlert)
+        .show();
 }
 
 function fuelColor(time) {

@@ -14,18 +14,14 @@
 
 <body>
     <header>
-        <div id="title-header">
-            <h1>Bl<font color="#5F87FF">u</font>e Weather</h1>
+        <h1>Bl<font color="#5F87FF">u</font>e Weather</h1>
+
+        <div>
+            <h2>Extra Fuel Aplicado</h2>
+            <h4><?php print date('H:i,  M d'); ?></h4>
         </div>
 
-        <div id="middle-header">
-            <h3>Extra Fuel Aplicado</h3>
-            <div id="update-div" flex-center><?php print date('H:i,  M d'); ?>
-            </div>
-        </div>
-        <div id="home">
-            <a href="/">HOME</a>
-        </div>
+        <a href="/">HOME</a>
     </header>
     <div id="div-status" flex-center>
         <label id="status-msg"></label>
@@ -43,9 +39,9 @@
                     <button id="tma" class="switch">TMA</button>
                 </div>
                 <div id="icons">
-                    <div class="icon new-icon"></div>
-                    <div class="icon edit-icon"></div>
-                    <div class="icon delete-icon"></div>
+                    <div title="Novo" class="icon new-icon"></div>
+                    <div title="Editar" class="icon edit-icon"></div>
+                    <div title="Remover" class="icon delete-icon"></div>
                 </div>
             </div>
 
