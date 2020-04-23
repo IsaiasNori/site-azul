@@ -68,6 +68,7 @@ try {
 function ready($params)
 {
     try {
+        closeRegisters();
         $all = false;
 
         if (isset($params['date_start'])) {
@@ -161,6 +162,24 @@ function remove($id)
         }
     } catch (\Throwable $e) {
         throw new Error($e->getMessage());
+    }
+}
+
+function closeRegisters()
+{
+    $db = new DataBase('XFUEL');
+    $result = $db->select(['date_closed' => null]);
+
+    if ($result) {
+        foreach ($result as $key => $value) {
+            $id = $value['id'];
+            $end = new DateTime($value['date_end']);
+            $now = new DateTime('now');
+
+            if ($end <= $now) {
+                $db->update($id, ['date_closed' => $now->format('Y-m-d H:i')]);
+            }
+        }
     }
 }
 
