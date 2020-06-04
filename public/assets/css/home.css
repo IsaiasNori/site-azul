@@ -21,14 +21,14 @@ h4 {
 }
 
 /* HEADER */
+
 header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     overflow: hidden;
-    /* background-color: #3B3C40; */
     background-size: cover;
-    background-image: url("/assets/image/img/dd-1.jpg");
+    background-image: url("../image/img/dd-1.jpg");
     padding: 0 10vw;
     margin: 2px;
     color: #F2F2F2;
@@ -60,7 +60,6 @@ main {
     width: 80%;
     display: flex;
     justify-content: space-evenly;
-    /* align-items: center; */
     padding: 20px 0;
     border-radius: 4px;
     background-color: #3B3C40;
@@ -76,9 +75,9 @@ main {
 }
 
 #link-panel {
-    background-image: url("/assets/image/img/panel-logo.PNG");
+    background-image: url("../image/img/panel-logo.png");
 }
 
 #link-manager {
-    background-image: url("/assets/image/img/manager-logo.png");
+    background-image: url("../image/img/manager-logo.png");
 }

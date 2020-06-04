@@ -39,7 +39,7 @@ function inputData(e) {
         if (type === "POST") {
             $.ajax({
                 type: 'POST',
-                url: "xfuel.php",
+                url: "./xfuel.php",
                 data: data,
                 success: (response) => {
                     if (response.id !== "") {
@@ -64,7 +64,7 @@ function inputData(e) {
 
             $.ajax({
                 type: 'PUT',
-                url: `xfuel.php?${params}`,
+                url: `./xfuel.php?${params}`,
                 success: (response) => {
                     if (response.id !== "") {
                         alert("Registro alterado com sucesso!");
@@ -134,7 +134,7 @@ function reloadForm() {
     let id = $('.selected').attr('id');
 
 
-    $.get(`xfuel.php?id=${id}`, (data, status) => {
+    $.get(`./xfuel.php?id=${id}`, (data, status) => {
         if (status === "success") {
             if (data.length === 1) {
                 data = data[0];
@@ -246,7 +246,7 @@ $('#reason').change((e) => {
 });
 
 $('form').ready(() => {
-    $.get('assets/lib/json/utils.json', (json, status) => {
+    $.get('./assets/lib/json/utils.json', (json, status) => {
         if (status === "success") {
             emptyForm();
             $('#type').empty().append('<option></option>');

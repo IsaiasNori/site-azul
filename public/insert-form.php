@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="assets/css/insert-form.css">
+<link rel="stylesheet" href="./assets/css/insert-form.css">
 
 <div id="content-form">
     <form>
@@ -51,4 +51,4 @@
         </div>
     </form>
 </div>
-<script src="assets/js/insert-form.js"></script>
+<script src="./assets/js/insert-form.js"></script>

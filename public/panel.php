@@ -5,9 +5,9 @@
 <head>
 	<meta charset="UTF-8">
 	<meta http-equiv="refresh" content="120" />
-	<link rel="stylesheet" href="assets/css/panel.css">
-	<script src="assets/lib/date/date-format.js"></script>
-	<script src="assets/lib/jquery/jquery-3.4.1.min.js"></script>
+	<link rel="stylesheet" href="./assets/css/panel.css">
+	<script src="./assets/lib/date/date-format.js"></script>
+	<script src="./assets/lib/jquery/jquery-3.4.1.min.js"></script>
 	<title>Panel BlueWeather</title>
 </head>
 
@@ -61,6 +61,6 @@
 
 	<footer></footer>
 
-	<script src="assets/js/panel.js"></script>
+	<script src="./assets/js/panel.js"></script>
 </body>
 <html>

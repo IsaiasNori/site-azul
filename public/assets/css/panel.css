@@ -133,7 +133,7 @@ header {
 	background-color: #000;
 }
 
-/* INFOADD - IMPLEMENTAR*/
+/* INFOADD */
 
 footer {
 	grid-area: alert;
@@ -184,17 +184,17 @@ footer {
 /* Dots */
 
 .green {
-	background-image: url("/assets/image/img/dot/green-dot.png");
+	background-image: url("../image/img/dot/green-dot.png");
 }
 
 .yellow {
-	background-image: url("/assets/image/img/dot/yellow-dot.png");
+	background-image: url("../image/img/dot/yellow-dot.png");
 }
 
 .red {
-	background-image: url("/assets/image/img/dot/red-dot.png");
+	background-image: url("../image/img/dot/red-dot.png");
 }
 
 .white {
-	background-image: url("/assets/image/img/dot/white-dot.png");
+	background-image: url("../image/img/dot/white-dot.png");
 }

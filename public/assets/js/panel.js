@@ -1,5 +1,10 @@
+$('.region').hide();
+
 function loadData(response, status) {
     if (status === 'success') {
+        $('#main').remove('.brick');
+        $('#footer').remove('.div-alert');
+
         $(response).each((index, item) => {
             if (item.type === 'alert') {
                 createAlert(item);
@@ -8,14 +13,12 @@ function loadData(response, status) {
             }
         });
 
-        $('#main').show();
-
         $('.block').each((i, item) => {
-                let grid = (item.childElementCount < 5) ? 'grid4' : 'grid12';
-                $(item).addClass(grid);
-            })
-            .toggle()
-            .toggle(600);
+            let grid = (item.childElementCount < 5) ? 'grid4' : 'grid12';
+            $(item).addClass(grid);
+        });
+
+        $('.region').show(800);
 
     } else {
         alert(status);
@@ -98,8 +101,5 @@ function fuelColor(time) {
 }
 
 $(document).ready(() => {
-    $('#main').hide();
-    $('#main').remove('.brick');
-    $('#footer').remove('.div-alert');
-    $.get("xfuel.php", loadData);
+    $.get("./xfuel.php", loadData);
 });

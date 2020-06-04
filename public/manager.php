@@ -6,9 +6,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,700,900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/manager.css">
-    <script src="assets/lib/jquery/jquery-3.4.1.min.js"></script>
-    <script src="assets/lib/date/date-format.js"></script>
+    <link rel="stylesheet" href="./assets/css/manager.css">
+    <script src="./assets/lib/jquery/jquery-3.4.1.min.js"></script>
+    <script src="./assets/lib/date/date-format.js"></script>
     <title>Management BlueWeather</title>
 </head>
 
@@ -56,7 +56,7 @@
 
     <div id="placeholder-form" class="hidden"></div>
 
-    <script src="assets/js/manager.js"></script>
+    <script src="./assets/js/manager.js"></script>
 </body>
 
 </html>

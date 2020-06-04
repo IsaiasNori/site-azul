@@ -67,7 +67,6 @@ header a {
 }
 
 /* MAIN */
-/* main { grid-area: main; padding: 10px 10%;} */
 main {
     padding: 10px 10vw;
 }
@@ -134,17 +133,17 @@ main {
 
 .new-icon {
     background-color: rgba(0, 0, 255, 0.2);
-    background-image: url("/assets/image/icon/new-icon.png");
+    background-image: url("../image/icon/new-icon.png");
 }
 
 .edit-icon {
     background-color: rgba(255, 255, 0, 0.2);
-    background-image: url("/assets/image/icon/edit-icon.png");
+    background-image: url("../image/icon/edit-icon.png");
 }
 
 .delete-icon {
     background-color: rgba(255, 0, 0, 0.2);
-    background-image: url("/assets/image/icon/delete-icon.png");
+    background-image: url("../image/icon/delete-icon.png");
 }
 
 /* MAIN TABLE */

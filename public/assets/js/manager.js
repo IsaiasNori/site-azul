@@ -6,7 +6,7 @@ function loadList(filter = 'alert') {
     $(`#${filter}`)
         .addClass('on');
 
-    $.get(`xfuel.php?region=${filter}`, (data, status) => {
+    $.get(`./xfuel.php?region=${filter}`, (data, status) => {
         if (status === "success") {
             // console.log('success: ', response);
             createTable(data, filter);
@@ -97,7 +97,7 @@ function deleteRow() {
     if (decision) {
         $.ajax({
             type: 'DELETE',
-            url: `xfuel.php?id=${id}`,
+            url: `./xfuel.php?id=${id}`,
             success: (response) => {
                 loadList(filter);
                 msg(response);
@@ -169,5 +169,5 @@ $(document).ready(() => {
 setInterval(() => {
         location.reload();
     },
-    60000000
+    6000000
 );
